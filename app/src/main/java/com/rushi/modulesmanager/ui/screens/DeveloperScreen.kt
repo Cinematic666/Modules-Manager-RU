@@ -1,5 +1,7 @@
 package com.rushi.modulesmanager.ui.screens
 
+import com.rushi.modulesmanager.ui.tr
+
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -85,7 +87,7 @@ fun DeveloperScreen(
                         IconButton(onClick = onBack) {
                             Icon(
                                 Icons.AutoMirrored.Outlined.ArrowBack,
-                                contentDescription = "Back",
+                                contentDescription = tr("Back"),
                             )
                         }
                     },
@@ -106,8 +108,8 @@ fun DeveloperScreen(
             ) {
                 EmptyState(
                     icon = Icons.Outlined.Extension,
-                    title = "No modules",
-                    body = "This developer has no other modules in the current repository.",
+                    title = tr("No modules"),
+                    body = tr("This developer has no other modules in the current repository."),
                 )
             }
         } else {
