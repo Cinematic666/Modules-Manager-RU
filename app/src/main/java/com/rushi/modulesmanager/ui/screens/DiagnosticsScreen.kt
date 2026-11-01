@@ -92,16 +92,16 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
     }
 
     val report = buildString {
-        appendLine("Modules Manager ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
-        appendLine("Build: ${BuildConfig.BUILD_TYPE} ${BuildConfig.GIT_COMMIT}")
-        appendLine("Android: ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})")
-        appendLine("Device: ${Build.MANUFACTURER} ${Build.MODEL}")
-        appendLine("ABIs: ${Build.SUPPORTED_ABIS.joinToString()}")
-        appendLine("Installed modules: ${installed.size}")
-        appendLine("Repository modules: ${modules.size}")
-        appendLine("Updates available: ${updates.size}")
-        appendLine("Index and README cache: ${formatStorage(stats.index + stats.readme)}")
-        appendLine("Downloaded APKs: ${formatStorage(stats.apks)}")
+        appendLine(tr("Modules Manager ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"))
+        appendLine(tr("Build: ${BuildConfig.BUILD_TYPE} ${BuildConfig.GIT_COMMIT}"))
+        appendLine(tr("Android: ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})"))
+        appendLine(tr("Device: ${Build.MANUFACTURER} ${Build.MODEL}"))
+        appendLine(tr("ABIs: ${Build.SUPPORTED_ABIS.joinToString()}"))
+        appendLine(tr("Installed modules: ${installed.size}"))
+        appendLine(tr("Repository modules: ${modules.size}"))
+        appendLine(tr("Updates available: ${updates.size}"))
+        appendLine(tr("Index and README cache: ${formatStorage(stats.index + stats.readme)}"))
+        appendLine(tr("Downloaded APKs: ${formatStorage(stats.apks)}"))
     }.trimEnd()
 
     fun refreshStorage() {
@@ -117,7 +117,7 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
         topBar = {
             Column {
                 TopAppBar(
-                    title = { Text("Diagnostics") },
+                    title = { Text(tr("Diagnostics")) },
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(
