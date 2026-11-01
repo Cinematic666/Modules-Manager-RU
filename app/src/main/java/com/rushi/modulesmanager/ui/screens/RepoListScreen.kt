@@ -329,7 +329,7 @@ fun RepoListScreen(
                                         RepoFilter.UPDATES -> tr("Every installed module is up to date.")
                                         RepoFilter.INSTALLED -> tr("None of your installed modules are in this repository.")
                                         RepoFilter.NOT_INSTALLED -> tr("Every module in this repository is installed.")
-                                        RepoFilter.ALL -> "No module matches \"$query\"."
+                                        RepoFilter.ALL -> tr("No module matches \"$query\".")
                                     },
                                 )
                             }
@@ -874,7 +874,7 @@ internal fun ModuleCard(
                                 text = "v${shortVersion(update.installed.versionName)} \u2192 v${shortVersion(update.version.name)}",
                             )
                             installed != null -> VersionPill(
-                                text = "Installed ${shortVersion(installed.versionName)}".trim(),
+                                text = tr("Installed ${shortVersion(installed.versionName)}").trim(),
                             )
                             latest != null -> VersionPill(text = "v${shortVersion(latest.name)}")
                         }
