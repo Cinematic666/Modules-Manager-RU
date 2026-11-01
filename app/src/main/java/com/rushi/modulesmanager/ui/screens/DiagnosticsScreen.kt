@@ -1,5 +1,7 @@
 package com.rushi.modulesmanager.ui.screens
 
+import com.rushi.modulesmanager.ui.tr
+
 import android.content.Intent
 import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
@@ -120,7 +122,7 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
                         IconButton(onClick = onBack) {
                             Icon(
                                 Icons.AutoMirrored.Outlined.ArrowBack,
-                                contentDescription = "Back",
+                                contentDescription = tr("Back"),
                             )
                         }
                     },
@@ -160,7 +162,7 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
                 OutlinedButton(
                     onClick = {
                         clipboard.setText(AnnotatedString(report))
-                        scope.launch { snackbar.showSnackbar("Report copied") }
+                        scope.launch { snackbar.showSnackbar(tr("Report copied")) }
                     },
                 ) {
                     Icon(
@@ -169,7 +171,7 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
                         modifier = Modifier.size(16.dp),
                     )
                     Spacer(Modifier.width(6.dp))
-                    Text("Copy")
+                    Text(tr("Copy"))
                 }
                 OutlinedButton(
                     onClick = {
@@ -178,7 +180,7 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
                             putExtra(Intent.EXTRA_TEXT, report)
                             putExtra(Intent.EXTRA_SUBJECT, "Modules Manager diagnostics")
                         }
-                        context.startActivity(Intent.createChooser(intent, "Share diagnostics"))
+                        context.startActivity(Intent.createChooser(intent, tr("Share diagnostics")))
                     },
                 ) {
                     Icon(
@@ -187,15 +189,15 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
                         modifier = Modifier.size(16.dp),
                     )
                     Spacer(Modifier.width(6.dp))
-                    Text("Share")
+                    Text(tr("Share"))
                 }
             }
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
-            Text("Storage", style = MaterialTheme.typography.titleSmall)
+            Text(tr("Storage"), style = MaterialTheme.typography.titleSmall)
 
             StorageRow(
-                title = "Index and README cache",
+                title = tr("Index and README cache"),
                 detail = formatStorage(stats.index + stats.readme),
                 onClear = {
                     viewModel.clearIndexCache()
@@ -203,7 +205,7 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
                 },
             )
             StorageRow(
-                title = "Downloaded APKs",
+                title = tr("Downloaded APKs"),
                 detail = formatStorage(stats.apks),
                 onClear = {
                     viewModel.clearDownloadedApks()
@@ -238,6 +240,6 @@ private fun StorageRow(title: String, detail: String, onClear: () -> Unit) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        TextButton(onClick = onClear) { Text("Clear") }
+        TextButton(onClick = onClear) { Text(tr("Clear")) }
     }
 }
