@@ -77,7 +77,7 @@ fun DeveloperScreen(
                                 overflow = TextOverflow.Ellipsis,
                             )
                             Text(
-                                text = if (entries.size == 1) "1 module" else "${entries.size} modules",
+                                text = if (entries.size == 1) tr("1 module") else tr("${entries.size} modules"),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
