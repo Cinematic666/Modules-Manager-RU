@@ -21,7 +21,7 @@
 ./gradlew :app:assembleRelease
 ```
 
-GitHub Actions проверяет unit-тесты и собирает debug APK для каждого изменения в `dev` и `main`. Публикация подписанного release APK выполняется по тегу вида `v2.2.3-ru.1`.
+GitHub Actions проверяет unit-тесты и собирает debug APK для каждого изменения в `dev` и `main`. Публикация подписанного release APK выполняется по тегу вида `v2.2.3-ru.1` или вручную через GitHub Actions → Release → Run workflow.
 
 ## Подпись APK и обновления
 
@@ -29,10 +29,10 @@ Release APK подписывается отдельным ключом этог�
 
 Для автоматической сборки релизов в GitHub Repository Secrets должны быть добавлены:
 
-- `ANDROID_KEYSTORE_BASE64` — содержимое JKS-файла в Base64.
-- `ANDROID_KEYSTORE_PASSWORD` — пароль хранилища.
-- `ANDROID_KEY_ALIAS` — alias ключа.
-- `ANDROID_KEY_PASSWORD` — пароль ключа.
+- `KEYSTORE_BASE64` — содержимое JKS-файла в Base64.
+- `KEYSTORE_PASSWORD` — пароль хранилища.
+- `KEY_ALIAS` — alias ключа.
+- `KEY_PASSWORD` — пароль ключа.
 
 Сборка из предыдущего debug-preview подписана временным debug-ключом GitHub Actions. Она не может быть обновлена release APK с постоянным ключом. Перед переходом с preview потребуется сохранить данные приложения и переустановить его. Последующие релизы с тем же release-ключом будут устанавливаться поверх предыдущих версий.
 
