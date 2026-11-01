@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Менеджер модулей</string>
+    <string name="downloads">Загрузки</string>
+    <string name="apk_download_progress">Ход загрузки APK</string>
+    <string name="preparing_download">Подготовка загрузки</string>
+    <string name="paused_download">Приостановлено — %1$s</string>
 </resources>
