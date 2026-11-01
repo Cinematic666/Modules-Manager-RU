@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Modules Manager</string>
+    <string name="downloads">Downloads</string>
+    <string name="apk_download_progress">APK download progress</string>
+    <string name="preparing_download">Preparing download</string>
+    <string name="paused_download">Paused — %1$s</string>
 </resources>
