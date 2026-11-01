@@ -5,6 +5,12 @@ on:
     tags:
       - "v*"
   workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Release tag to create (for example v2.2.3-ru.1)"
+        required: true
+        type: string
+        default: "v2.2.3-ru.1"
 
 permissions:
   contents: write
@@ -42,11 +48,14 @@ jobs:
       - name: Prepare release signing key
         env:
           KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           test -n "$KEYSTORE_BASE64" || { echo "::error::Missing ANDROID_KEYSTORE_BASE64 repository secret"; exit 1; }
-          test -n "${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" || { echo "::error::Missing ANDROID_KEYSTORE_PASSWORD repository secret"; exit 1; }
-          test -n "${{ secrets.ANDROID_KEY_ALIAS }}" || { echo "::error::Missing ANDROID_KEY_ALIAS repository secret"; exit 1; }
-          test -n "${{ secrets.ANDROID_KEY_PASSWORD }}" || { echo "::error::Missing ANDROID_KEY_PASSWORD repository secret"; exit 1; }
+          test -n "$KEYSTORE_PASSWORD" || { echo "::error::Missing ANDROID_KEYSTORE_PASSWORD repository secret"; exit 1; }
+          test -n "$KEY_ALIAS" || { echo "::error::Missing ANDROID_KEY_ALIAS repository secret"; exit 1; }
+          test -n "$KEY_PASSWORD" || { echo "::error::Missing ANDROID_KEY_PASSWORD repository secret"; exit 1; }
           echo "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/modules-manager-release.jks"
           test -s "$RUNNER_TEMP/modules-manager-release.jks"
           echo "KEYSTORE_PATH=$RUNNER_TEMP/modules-manager-release.jks" >> "$GITHUB_ENV"
@@ -78,7 +87,8 @@ jobs:
       - name: Publish GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
-          name: Modules Manager ${{ github.ref_name }}
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref_name }}
+          target_commitish: ${{ github.sha }}
+          name: Modules Manager ${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref_name }}
           generate_release_notes: true
           files: app/build/outputs/apk/release/app-release.apk
