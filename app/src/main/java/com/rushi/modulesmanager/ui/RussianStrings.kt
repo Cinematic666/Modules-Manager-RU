@@ -11,8 +11,8 @@ internal fun tr(source: String): String {
     if (Locale.getDefault().language != "ru") return source
     russianStrings[source]?.let { return it }
     return when {
-        source.contains("\\nSeveral APKs fit this device equally well.") ->
-            source.substringBefore("\\n") + "\\nДля этого устройства одинаково подходят несколько APK."
+        source.contains("\nSeveral APKs fit this device equally well.") ->
+            source.substringBefore("\n") + "\nДля этого устройства одинаково подходят несколько APK."
         source.startsWith("No module matches ") -> "Нет модулей, соответствующих запросу " + source.removePrefix("No module matches ")
         source.startsWith("Installing ") -> "Устанавливается: " + source.removePrefix("Installing ")
         source.startsWith("Last release ") -> "Последний релиз: " + source.removePrefix("Last release ")
