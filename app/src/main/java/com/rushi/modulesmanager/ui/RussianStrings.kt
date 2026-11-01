@@ -11,6 +11,12 @@ internal fun tr(source: String): String {
     if (Locale.getDefault().language != "ru") return source
     russianStrings[source]?.let { return it }
     return when {
+        source.contains("\\nSeveral APKs fit this device equally well.") ->
+            source.substringBefore("\\n") + "\\nДля этого устройства одинаково подходят несколько APK."
+        source.startsWith("No module matches ") -> "Нет модулей, соответствующих запросу " + source.removePrefix("No module matches ")
+        source.startsWith("Installing ") -> "Устанавливается: " + source.removePrefix("Installing ")
+        source.startsWith("Last release ") -> "Последний релиз: " + source.removePrefix("Last release ")
+        source.endsWith(" downloads") -> "Загрузок: " + source.removeSuffix(" downloads")
         source.startsWith("More by ") -> "Другие модули автора: " + source.removePrefix("More by ")
         source.startsWith("Uninstall ") && source.endsWith("?") ->
             "Удалить приложение " + source.removePrefix("Uninstall ").removeSuffix("?") + "?"
@@ -361,5 +367,7 @@ private val russianStrings = mapOf(
     "Could not open the uninstaller" to "Не удалось открыть деинсталлятор",
     "No link available" to "Ссылка недоступна",
     "No app can open this link" to "Нет приложения, способного открыть эту ссылку",
-    "Install failed: \$it" to "Ошибка установки: \$it"
+    "Install failed: \$it" to "Ошибка установки: \$it",
+    "Modules Manager diagnostics" to "Диагностика Менеджера модулей",
+    "The index cache is fetched again after clearing. Downloaded APKs are only needed until the installer finishes." to "После очистки кэш каталога будет загружен заново. Скачанные APK нужны только до завершения установки."
 )
