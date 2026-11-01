@@ -129,7 +129,7 @@ fun SettingsScreen(
             SettingsRow(
                 icon = Icons.Outlined.Palette,
                 title = tr("Theme"),
-                subtitle = "${theme.label} - ${theme.description}",
+                subtitle = "${tr(theme.label)} — ${tr(theme.description)}",
                 onClick = { showThemeDialog = true },
             )
 
@@ -154,7 +154,7 @@ fun SettingsScreen(
             )
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-            SectionTitle("Updates")
+            SectionTitle(tr("Updates"))
             SettingsRow(
                 icon = Icons.Outlined.Refresh,
                 title = tr("Check for updates"),
@@ -163,19 +163,19 @@ fun SettingsScreen(
             SettingsRow(
                 icon = Icons.Outlined.InstallMobile,
                 title = tr("Installer"),
-                subtitle = installer.label,
+                subtitle = tr(installer.label),
                 onClick = { showInstallerDialog = true },
             )
             SettingsRow(
                 icon = Icons.Outlined.Download,
                 title = tr("Update channel"),
-                subtitle = channel.label,
+                subtitle = tr(channel.label),
                 onClick = { showChannelDialog = true },
             )
             SettingsRow(
                 icon = Icons.Outlined.Speed,
                 title = tr("Concurrent downloads"),
-                subtitle = "$concurrentDownloads at a time",
+                subtitle = tr("$concurrentDownloads at a time"),
                 onClick = { showDownloadsDialog = true },
             )
 
@@ -190,11 +190,11 @@ fun SettingsScreen(
             SettingsRow(
                 icon = Icons.Outlined.Info,
                 title = tr("Modules Manager"),
-                subtitle = "Version ${BuildConfig.VERSION_NAME}",
+                subtitle = "Версия ${BuildConfig.VERSION_NAME}",
             )
             SettingsRow(
                 icon = Icons.Outlined.BugReport,
-                title = "Diagnostics",
+                title = tr("Diagnostics"),
                 subtitle = tr("Device, build and cache details"),
                 onClick = onOpenDiagnostics,
             )
@@ -262,9 +262,9 @@ fun SettingsScreen(
                                 },
                             )
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(option.label, style = MaterialTheme.typography.bodyLarge)
+                                Text(tr(option.label), style = MaterialTheme.typography.bodyLarge)
                                 Text(
-                                    text = option.description,
+                                    text = tr(option.description),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
