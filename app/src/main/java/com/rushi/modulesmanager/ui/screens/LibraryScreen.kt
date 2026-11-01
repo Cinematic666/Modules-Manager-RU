@@ -1,5 +1,7 @@
 package com.rushi.modulesmanager.ui.screens
 
+import com.rushi.modulesmanager.ui.tr
+
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -55,8 +57,8 @@ import com.rushi.modulesmanager.ui.components.EmptyState
 import kotlinx.coroutines.launch
 
 private enum class LibraryTab(val label: String, val icon: ImageVector) {
-    FAVOURITES("Favourites", Icons.Outlined.FavoriteBorder),
-    RECENT("Recent", Icons.Outlined.History),
+    FAVOURITES(tr("Favourites"), Icons.Outlined.FavoriteBorder),
+    RECENT(tr("Recent"), Icons.Outlined.History),
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -205,13 +207,13 @@ fun LibraryScreen(
                         when (selectedTab) {
                             LibraryTab.FAVOURITES -> EmptyState(
                                 icon = Icons.Outlined.FavoriteBorder,
-                                title = "No favourites yet",
-                                body = "Tap the heart on a module card or module page to keep it here.",
+                                title = tr("No favourites yet"),
+                                body = tr("Tap the heart on a module card or module page to keep it here."),
                             )
                             LibraryTab.RECENT -> EmptyState(
                                 icon = Icons.Outlined.History,
-                                title = "Nothing viewed yet",
-                                body = "Modules you open show up here.",
+                                title = tr("Nothing viewed yet"),
+                                body = tr("Modules you open show up here."),
                             )
                         }
                     }
@@ -275,7 +277,7 @@ fun LibraryScreen(
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.KeyboardArrowUp,
-                            contentDescription = "Scroll to top",
+                            contentDescription = tr("Scroll to top"),
                         )
                     }
                 }

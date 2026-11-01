@@ -32,8 +32,8 @@ android {
         applicationId = "io.github.rushiranpise.modulesmanager"
         minSdk = 26
         targetSdk = 36
-        versionCode = 13
-        versionName = "2.2.3"
+        versionCode = 14
+        versionName = "2.2.3-ru.1"
         buildConfigField("String", "GIT_COMMIT", "\"$gitCommit\"")
     }
 

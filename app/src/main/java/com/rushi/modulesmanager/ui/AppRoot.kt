@@ -91,10 +91,10 @@ import com.rushi.modulesmanager.ui.screens.SettingsScreen
 import com.rushi.modulesmanager.ui.theme.LocalAmoled
 
 private enum class Destination(val route: String, val label: String, val icon: ImageVector) {
-    MODULES("modules", "Modules", Icons.Outlined.Extension),
-    INSTALLED("installed", "Installed", Icons.Outlined.Apps),
-    LIBRARY("library", "Library", Icons.Outlined.Bookmarks),
-    SETTINGS("settings", "Settings", Icons.Outlined.Settings),
+    MODULES("modules", tr("Modules"), Icons.Outlined.Extension),
+    INSTALLED("installed", tr("Installed"), Icons.Outlined.Apps),
+    LIBRARY("library", tr("Library"), Icons.Outlined.Bookmarks),
+    SETTINGS("settings", tr("Settings"), Icons.Outlined.Settings),
 }
 
 @Composable
@@ -168,7 +168,7 @@ fun AppRoot(viewModel: AppViewModel) {
                                             navController.navigateTopLevel(destination.route)
                                         },
                                         icon = { DestinationIcon(destination, installed.size) },
-                                        label = { Text(destination.label) },
+                                        label = { Text(tr(destination.label)) },
                                     )
                                 }
                             }
@@ -230,7 +230,7 @@ fun AppRoot(viewModel: AppViewModel) {
     variantChoice?.let { choice ->
         AlertDialog(
             onDismissRequest = viewModel::cancelVariantChoice,
-            title = { Text("Choose an APK") },
+            title = { Text(tr("Choose an APK")) },
             text = {
                 Column(
                     modifier = Modifier
@@ -239,7 +239,7 @@ fun AppRoot(viewModel: AppViewModel) {
                     verticalArrangement = Arrangement.spacedBy(2.dp),
                 ) {
                     Text(
-                        text = "${choice.module.displayName}\nSeveral APKs fit this device equally well.",
+                        text = tr("${choice.module.displayName}\nSeveral APKs fit this device equally well."),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -258,7 +258,7 @@ fun AppRoot(viewModel: AppViewModel) {
                                     addAll(ApkVariants.hints(asset))
                                     if (asset.size > 0) add(formatBytes(asset.size))
                                     if (asset.downloadCount > 0) {
-                                        add("${asset.downloadCount} downloads")
+                                        add(tr("${asset.downloadCount} downloads"))
                                     }
                                 }.joinToString(" - ")
                                 if (details.isNotEmpty()) {
@@ -275,7 +275,7 @@ fun AppRoot(viewModel: AppViewModel) {
             },
             confirmButton = {},
             dismissButton = {
-                TextButton(onClick = viewModel::cancelVariantChoice) { Text("Cancel") }
+                TextButton(onClick = viewModel::cancelVariantChoice) { Text(tr("Cancel")) }
             },
         )
     }
@@ -379,7 +379,7 @@ private fun FloatingNavItem(
             exit = shrinkHorizontally() + fadeOut(),
         ) {
             Text(
-                text = destination.label,
+                text = tr(destination.label),
                 color = content,
                 style = MaterialTheme.typography.labelLarge,
                 maxLines = 1,
@@ -532,7 +532,7 @@ private fun MessageBanner(data: SnackbarData) {
             IconButton(onClick = { data.dismiss() }, modifier = Modifier.size(40.dp)) {
                 Icon(
                     imageVector = Icons.Outlined.Close,
-                    contentDescription = "Dismiss",
+                    contentDescription = tr("Dismiss"),
                     modifier = Modifier.size(18.dp),
                 )
             }

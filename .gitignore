@@ -12,3 +12,5 @@ captures/
 *.aab
 *.keystore
 !gradle/wrapper/gradle-wrapper.jar
+*.jks
+*.p12

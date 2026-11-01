@@ -4,13 +4,25 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: "Release tag (for example v2.2.3-ru.1)"
+        required: true
+        type: string
+        default: "v2.2.3-ru.1"
 
 permissions:
   contents: write
 
+concurrency:
+  group: android-release-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,6 +34,7 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
+          cache: gradle
 
       - name: Set up Android SDK
         run: |
@@ -37,8 +50,14 @@ jobs:
         env:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
-          test -n "$KEYSTORE_BASE64"
-          echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+          test -n "$KEYSTORE_BASE64" || { echo "::error::Missing KEYSTORE_BASE64 repository secret"; exit 1; }
+          echo "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/release.jks"
+          test -s "$RUNNER_TEMP/release.jks"
+
+      - name: Run unit tests
+        run: |
+          chmod +x gradlew
+          ./gradlew :app:testDebugUnitTest --no-daemon
 
       - name: Build debug and signed release
         env:
@@ -47,21 +66,21 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          chmod +x gradlew
+          test -n "$KEYSTORE_PASSWORD"
+          test -n "$KEY_ALIAS"
+          test -n "$KEY_PASSWORD"
           ./gradlew :app:assembleDebug :app:assembleRelease --no-daemon
 
       - name: Verify release signature
         run: |
           APKSIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort -V | tail -1)
           test -n "$APKSIGNER"
-          for APK in app/build/outputs/apk/release/app-release.apk; do
-            echo "Verifying $APK"
-            "$APKSIGNER" verify --print-certs "$APK"
-          done
+          "$APKSIGNER" verify --verbose --print-certs app/build/outputs/apk/release/app-release.apk
 
       - name: Prepare release files
         run: |
-          TAG="${GITHUB_REF_NAME}"
+          TAG="${{ github.event_name == 'workflow_dispatch' && inputs.tag_name || github.ref_name }}"
+          echo "RELEASE_TAG=$TAG" >> "$GITHUB_ENV"
           rm -rf artifacts
           mkdir -p artifacts
           cp app/build/outputs/apk/debug/app-debug.apk "artifacts/ModulesManager-${TAG}-debug.apk"
@@ -83,23 +102,20 @@ jobs:
             echo "## Downloads"
             echo "One APK works on every phone and emulator."
             echo
-            echo "- \`ModulesManager-${TAG}-release.apk\`: signed release build"
-            echo "- \`ModulesManager-${TAG}-debug.apk\`: debug build"
+            echo "- `ModulesManager-${TAG}-release.apk`: signed release build"
+            echo "- `ModulesManager-${TAG}-debug.apk`: debug build"
           } >> release-notes.md
 
       - name: Publish GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          TAG="${GITHUB_REF_NAME}"
+          TAG="$RELEASE_TAG"
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release edit "$TAG" --title "Modules Manager ${TAG}" --notes-file release-notes.md
             gh release upload "$TAG" artifacts/*.apk --clobber
           else
-            gh release create "$TAG" \
-              artifacts/*.apk \
-              --title "Modules Manager ${TAG}" \
-              --notes-file release-notes.md
+            gh release create "$TAG" artifacts/*.apk --title "Modules Manager ${TAG}" --notes-file release-notes.md --target "$GITHUB_SHA"
           fi
 
       - name: Check LSPosed module repository token
@@ -128,7 +144,7 @@ jobs:
           ASSET="artifacts/ModulesManager-${MODULE_TAG}-release.apk"
           cp app/build/outputs/apk/release/app-release.apk "$ASSET"
 
-          NOTES="release-notes/${GITHUB_REF_NAME#v}.md"
+          NOTES="release-notes/${RELEASE_TAG#v}.md"
           if [ -f "$NOTES" ]; then
             cp "$NOTES" module-release-notes.md
           else
@@ -139,16 +155,12 @@ jobs:
             echo
             echo "## Download"
             echo
-            echo "- \`ModulesManager-${MODULE_TAG}-release.apk\`: signed release build"
+            echo "- `ModulesManager-${MODULE_TAG}-release.apk`: signed release build"
           } >> module-release-notes.md
 
           if gh release view "$MODULE_TAG" -R "$REPO" >/dev/null 2>&1; then
-            gh release edit "$MODULE_TAG" -R "$REPO" \
-              --title "Modules Manager ${VERSION_NAME}" \
-              --notes-file module-release-notes.md
+            gh release edit "$MODULE_TAG" -R "$REPO" --title "Modules Manager ${VERSION_NAME}" --notes-file module-release-notes.md
             gh release upload "$MODULE_TAG" "$ASSET" -R "$REPO" --clobber
           else
-            gh release create "$MODULE_TAG" "$ASSET" -R "$REPO" \
-              --title "Modules Manager ${VERSION_NAME}" \
-              --notes-file module-release-notes.md
+            gh release create "$MODULE_TAG" "$ASSET" -R "$REPO" --title "Modules Manager ${VERSION_NAME}" --notes-file module-release-notes.md
           fi

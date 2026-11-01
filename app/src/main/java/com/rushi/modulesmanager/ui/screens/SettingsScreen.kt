@@ -1,5 +1,7 @@
 package com.rushi.modulesmanager.ui.screens
 
+import com.rushi.modulesmanager.ui.tr
+
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -109,42 +111,42 @@ fun SettingsScreen(
                 .verticalScroll(scrollState)
                 .padding(bottom = 120.dp),
         ) {
-            SectionTitle("Appearance")
+            SectionTitle(tr("Appearance"))
             SettingsSwitchRow(
                 icon = Icons.Outlined.DarkMode,
-                title = "AMOLED mode",
-                subtitle = "Pitch black backgrounds when the dark theme is active",
+                title = tr("AMOLED mode"),
+                subtitle = tr("Pitch black backgrounds when the dark theme is active"),
                 checked = amoled,
                 onCheckedChange = viewModel::setAmoled,
             )
             SettingsSwitchRow(
                 icon = Icons.Outlined.ColorLens,
-                title = "System colors",
-                subtitle = "Material You colors on Android 12+",
+                title = tr("System colors"),
+                subtitle = tr("Material You colors on Android 12+"),
                 checked = systemColors,
                 onCheckedChange = viewModel::setSystemColors,
             )
             SettingsRow(
                 icon = Icons.Outlined.Palette,
-                title = "Theme",
-                subtitle = "${theme.label} - ${theme.description}",
+                title = tr("Theme"),
+                subtitle = "${tr(theme.label)} — ${tr(theme.description)}",
                 onClick = { showThemeDialog = true },
             )
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-            SectionTitle("Translation")
+            SectionTitle(tr("Translation"))
             SettingsSwitchRow(
                 icon = Icons.Outlined.Translate,
-                title = "Translate automatically",
-                subtitle = "Translate module descriptions and READMEs when they load",
+                title = tr("Translate automatically"),
+                subtitle = tr("Translate module descriptions and READMEs when they load"),
                 checked = autoTranslate,
                 onCheckedChange = viewModel::setAutoTranslate,
             )
             SettingsRow(
                 icon = Icons.Outlined.Language,
-                title = "Language",
+                title = tr("Language"),
                 subtitle = if (translateLanguage == null) {
-                    "${TranslationLanguages.selectedLabel(null)} (device language)"
+                    tr("${TranslationLanguages.selectedLabel(null)} (device language)")
                 } else {
                     TranslationLanguages.selectedLabel(translateLanguage)
                 },
@@ -152,53 +154,53 @@ fun SettingsScreen(
             )
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-            SectionTitle("Updates")
+            SectionTitle(tr("Updates"))
             SettingsRow(
                 icon = Icons.Outlined.Refresh,
-                title = "Check for updates",
+                title = tr("Check for updates"),
                 onClick = viewModel::refresh,
             )
             SettingsRow(
                 icon = Icons.Outlined.InstallMobile,
-                title = "Installer",
-                subtitle = installer.label,
+                title = tr("Installer"),
+                subtitle = tr(installer.label),
                 onClick = { showInstallerDialog = true },
             )
             SettingsRow(
                 icon = Icons.Outlined.Download,
-                title = "Update channel",
-                subtitle = channel.label,
+                title = tr("Update channel"),
+                subtitle = tr(channel.label),
                 onClick = { showChannelDialog = true },
             )
             SettingsRow(
                 icon = Icons.Outlined.Speed,
-                title = "Concurrent downloads",
-                subtitle = "$concurrentDownloads at a time",
+                title = tr("Concurrent downloads"),
+                subtitle = tr("$concurrentDownloads at a time"),
                 onClick = { showDownloadsDialog = true },
             )
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
-            SectionTitle("About")
+            SectionTitle(tr("About"))
             SettingsRow(
                 icon = Icons.Outlined.LocalCafe,
-                title = "Buy me a coffee",
+                title = tr("Buy me a coffee"),
                 subtitle = "buymeacoffee.com/rushiranpise",
                 onClick = { viewModel.openLink("https://buymeacoffee.com/rushiranpise") },
             )
             SettingsRow(
                 icon = Icons.Outlined.Info,
-                title = "Modules Manager",
-                subtitle = "Version ${BuildConfig.VERSION_NAME}",
+                title = tr("Modules Manager"),
+                subtitle = "Версия ${BuildConfig.VERSION_NAME}",
             )
             SettingsRow(
                 icon = Icons.Outlined.BugReport,
-                title = "Diagnostics",
-                subtitle = "Device, build and cache details",
+                title = tr("Diagnostics"),
+                subtitle = tr("Device, build and cache details"),
                 onClick = onOpenDiagnostics,
             )
             SettingsRow(
                 icon = Icons.Outlined.Code,
-                title = "View on GitHub",
+                title = tr("View on GitHub"),
                 subtitle = "github.com/rushiranpise/lsposed-modules-manager",
                 onClick = { viewModel.openLink("https://github.com/rushiranpise/lsposed-modules-manager") },
             )
@@ -228,7 +230,7 @@ fun SettingsScreen(
             ) {
                 Icon(
                     imageVector = Icons.Outlined.KeyboardArrowUp,
-                    contentDescription = "Scroll to top",
+                    contentDescription = tr("Scroll to top"),
                 )
             }
         }
@@ -238,7 +240,7 @@ fun SettingsScreen(
     if (showChannelDialog) {
         AlertDialog(
             onDismissRequest = { showChannelDialog = false },
-            title = { Text("Update channel") },
+            title = { Text(tr("Update channel")) },
             text = {
                 Column {
                     UpdateChannel.entries.forEach { option ->
@@ -260,9 +262,9 @@ fun SettingsScreen(
                                 },
                             )
                             Column(modifier = Modifier.weight(1f)) {
-                                Text(option.label, style = MaterialTheme.typography.bodyLarge)
+                                Text(tr(option.label), style = MaterialTheme.typography.bodyLarge)
                                 Text(
-                                    text = option.description,
+                                    text = tr(option.description),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
@@ -272,7 +274,7 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showChannelDialog = false }) { Text("Close") }
+                TextButton(onClick = { showChannelDialog = false }) { Text(tr("Close")) }
             },
         )
     }
@@ -280,7 +282,7 @@ fun SettingsScreen(
     if (showThemeDialog) {
         AlertDialog(
             onDismissRequest = { showThemeDialog = false },
-            title = { Text("Theme") },
+            title = { Text(tr("Theme")) },
             text = {
                 Column {
                     AppTheme.entries.forEach { option ->
@@ -314,7 +316,7 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showThemeDialog = false }) { Text("Close") }
+                TextButton(onClick = { showThemeDialog = false }) { Text(tr("Close")) }
             },
         )
     }
@@ -322,7 +324,7 @@ fun SettingsScreen(
     if (showLanguageDialog) {
         AlertDialog(
             onDismissRequest = { showLanguageDialog = false },
-            title = { Text("Translation language") },
+            title = { Text(tr("Translation language")) },
             text = {
                 Column(
                     modifier = Modifier
@@ -330,7 +332,7 @@ fun SettingsScreen(
                         .verticalScroll(rememberScrollState()),
                 ) {
                     LanguageOption(
-                        label = "Device language",
+                        label = tr("Device language"),
                         selected = translateLanguage == null,
                         onClick = {
                             viewModel.setTranslateLanguage(null)
@@ -350,7 +352,7 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showLanguageDialog = false }) { Text("Close") }
+                TextButton(onClick = { showLanguageDialog = false }) { Text(tr("Close")) }
             },
         )
     }
@@ -358,7 +360,7 @@ fun SettingsScreen(
     if (showDownloadsDialog) {
         AlertDialog(
             onDismissRequest = { showDownloadsDialog = false },
-            title = { Text("Concurrent downloads") },
+            title = { Text(tr("Concurrent downloads")) },
             text = {
                 Column {
                     (1..5).forEach { count ->
@@ -380,10 +382,10 @@ fun SettingsScreen(
                                 },
                             )
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("$count at a time", style = MaterialTheme.typography.bodyLarge)
+                                Text(tr("$count at a time"), style = MaterialTheme.typography.bodyLarge)
                                 if (count == 3) {
                                     Text(
-                                        text = "Default",
+                                        text = tr("Default"),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
@@ -394,7 +396,7 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showDownloadsDialog = false }) { Text("Close") }
+                TextButton(onClick = { showDownloadsDialog = false }) { Text(tr("Close")) }
             },
         )
     }
@@ -402,7 +404,7 @@ fun SettingsScreen(
     if (showInstallerDialog) {
         AlertDialog(
             onDismissRequest = { showInstallerDialog = false },
-            title = { Text("Installer") },
+            title = { Text(tr("Installer")) },
             text = {
                 Column {
                     InstallerType.entries.forEach { option ->
@@ -443,10 +445,10 @@ fun SettingsScreen(
                         ) {
                             Text(
                                 text = when (shizukuStatus) {
-                                    ShizukuInstaller.Status.READY -> "Shizuku is running and allowed"
+                                    ShizukuInstaller.Status.READY -> tr("Shizuku is running and allowed")
                                     ShizukuInstaller.Status.PERMISSION_REQUIRED ->
-                                        "Shizuku permission is not granted"
-                                    ShizukuInstaller.Status.NOT_RUNNING -> "Shizuku is not running"
+                                        tr("Shizuku permission is not granted")
+                                    ShizukuInstaller.Status.NOT_RUNNING -> tr("Shizuku is not running")
                                 },
                                 style = MaterialTheme.typography.bodySmall,
                                 color = if (shizukuStatus == ShizukuInstaller.Status.READY) {
@@ -468,9 +470,9 @@ fun SettingsScreen(
                                 ) {
                                     Text(
                                         if (shizukuStatus == ShizukuInstaller.Status.NOT_RUNNING) {
-                                            "Start"
+                                            tr("Start")
                                         } else {
-                                            "Allow"
+                                            tr("Allow")
                                         },
                                     )
                                 }
@@ -480,7 +482,7 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showInstallerDialog = false }) { Text("Close") }
+                TextButton(onClick = { showInstallerDialog = false }) { Text(tr("Close")) }
             },
         )
     }

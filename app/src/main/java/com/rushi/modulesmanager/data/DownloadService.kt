@@ -11,6 +11,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.rushi.modulesmanager.MainActivity
 import com.rushi.modulesmanager.ModulesManagerApplication
+import com.rushi.modulesmanager.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -57,10 +58,10 @@ class DownloadService : Service() {
         manager.createNotificationChannel(
             NotificationChannel(
                 CHANNEL_ID,
-                "Downloads",
+                getString(R.string.downloads),
                 NotificationManager.IMPORTANCE_LOW,
             ).apply {
-                description = "APK download progress"
+                description = getString(R.string.apk_download_progress)
                 setShowBadge(false)
             },
         )
@@ -75,9 +76,9 @@ class DownloadService : Service() {
         )
         val builder = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.stat_sys_download)
-            .setContentTitle(state?.label ?: "Preparing download")
+            .setContentTitle(state?.label ?: getString(R.string.preparing_download))
             .setContentText(
-                if (state?.paused == true) "Paused - ${state.fileName}" else state?.fileName.orEmpty(),
+                if (state?.paused == true) getString(R.string.paused_download, state.fileName) else state?.fileName.orEmpty(),
             )
             .setContentIntent(open)
             .setOnlyAlertOnce(true)

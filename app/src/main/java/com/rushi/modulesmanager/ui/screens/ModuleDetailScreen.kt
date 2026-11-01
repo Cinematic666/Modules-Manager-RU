@@ -1,5 +1,7 @@
 package com.rushi.modulesmanager.ui.screens
 
+import com.rushi.modulesmanager.ui.tr
+
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -116,7 +118,7 @@ import com.rushi.modulesmanager.ui.components.shortVersion
 import com.rushi.modulesmanager.ui.theme.amoledCardBorder
 import com.rushi.modulesmanager.ui.theme.amoledCardContainerColor
 
-private val tabs = listOf("Overview", "Releases")
+private val tabs = listOf(tr("Overview"), tr("Releases"))
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -173,7 +175,7 @@ fun ModuleDetailScreen(
                 title = {},
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Outlined.ArrowBack, contentDescription = tr("Back"))
                     }
                 },
                 actions = {
@@ -185,9 +187,9 @@ fun ModuleDetailScreen(
                                 Icons.Outlined.FavoriteBorder
                             },
                             contentDescription = if (packageName in favourites) {
-                                "Remove from favourites"
+                                tr("Remove from favourites")
                             } else {
-                                "Add to favourites"
+                                tr("Add to favourites")
                             },
                             tint = if (packageName in favourites) {
                                 favouriteColor()
@@ -252,12 +254,12 @@ fun ModuleDetailScreen(
                                     imageVector = Icons.Outlined.Translate,
                                     contentDescription = when {
                                         !translated -> if (readme) {
-                                            "Translate README"
+                                            tr("Translate README")
                                         } else {
-                                            "Translate release notes"
+                                            tr("Translate release notes")
                                         }
-                                        showOriginal -> "Show translation"
-                                        else -> "Show original"
+                                        showOriginal -> tr("Show translation")
+                                        else -> tr("Show original")
                                     },
                                     tint = if (translated && !showOriginal) {
                                         MaterialTheme.colorScheme.primary
@@ -272,14 +274,14 @@ fun ModuleDetailScreen(
                         IconButton(onClick = { viewModel.openLink(url) }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Outlined.OpenInNew,
-                                contentDescription = "Open releases page",
+                                contentDescription = tr("Open releases page"),
                             )
                         }
                     }
                     IconButton(onClick = { copyToClipboard(context, packageName) }) {
                         Icon(
                             imageVector = Icons.Outlined.ContentCopy,
-                            contentDescription = "Copy package name",
+                            contentDescription = tr("Copy package name"),
                         )
                     }
                     if (module != null && viewModel.canOverrideSource(packageName)) {
@@ -289,7 +291,7 @@ fun ModuleDetailScreen(
                         }) {
                             Icon(
                                 imageVector = Icons.Outlined.Edit,
-                                contentDescription = "Set source repository",
+                                contentDescription = tr("Set source repository"),
                             )
                         }
                     }
@@ -307,12 +309,12 @@ fun ModuleDetailScreen(
         ) {
             if (module == null) {
                 if (loading) {
-                    LoadingState("Loading module details...")
+                    LoadingState(tr("Loading module details..."))
                 } else {
                     EmptyState(
                         icon = Icons.Outlined.Info,
-                        title = "Module not found",
-                        body = detailError ?: "This module is not part of the selected repository.",
+                        title = tr("Module not found"),
+                        body = detailError ?: tr("This module is not part of the selected repository."),
                     )
                 }
                 return@Column
@@ -391,11 +393,11 @@ fun ModuleDetailScreen(
     if (editingSource && module != null) {
         AlertDialog(
             onDismissRequest = { editingSource = false },
-            title = { Text("Set source repository") },
+            title = { Text(tr("Set source repository")) },
             text = {
                 Column {
                     Text(
-                        text = "Used for the owner, avatar, README and release links when the index points to a fork or the wrong repository.",
+                        text = tr("Used for the owner, avatar, README and release links when the index points to a fork or the wrong repository."),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -412,7 +414,7 @@ fun ModuleDetailScreen(
                     if (knownSources.size > 1) {
                         Spacer(Modifier.height(10.dp))
                         Text(
-                            text = "Repositories in the index",
+                            text = tr("Repositories in the index"),
                             style = MaterialTheme.typography.titleSmall,
                         )
                         Spacer(Modifier.height(4.dp))
@@ -440,7 +442,7 @@ fun ModuleDetailScreen(
                                         )
                                         candidate.releaseTime?.let { time ->
                                             Text(
-                                                text = "Last release ${time.substringBefore('T')}",
+                                                text = tr("Last release ${time.substringBefore('T')}"),
                                                 style = MaterialTheme.typography.labelSmall,
                                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                             )
@@ -448,7 +450,7 @@ fun ModuleDetailScreen(
                                     }
                                     if (candidate.repo == module.githubRepoFullName()) {
                                         Text(
-                                            text = "Current",
+                                            text = tr("Current"),
                                             style = MaterialTheme.typography.labelSmall,
                                             color = MaterialTheme.colorScheme.primary,
                                         )
@@ -458,7 +460,7 @@ fun ModuleDetailScreen(
                         }
                         Spacer(Modifier.height(10.dp))
                         Text(
-                            text = "Or enter another repository",
+                            text = tr("Or enter another repository"),
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -467,7 +469,7 @@ fun ModuleDetailScreen(
                     OutlinedTextField(
                         value = sourceInput,
                         onValueChange = { sourceInput = it },
-                        placeholder = { Text("owner/repo or https://github.com/owner/repo") },
+                        placeholder = { Text(tr("owner/repo or https://github.com/owner/repo")) },
                         singleLine = true,
                         modifier = Modifier.fillMaxWidth(),
                     )
@@ -476,7 +478,7 @@ fun ModuleDetailScreen(
             confirmButton = {
                 TextButton(onClick = {
                     if (viewModel.setModuleSource(module, sourceInput)) editingSource = false
-                }) { Text("Save") }
+                }) { Text(tr("Save")) }
             },
             dismissButton = {
                 Row {
@@ -484,9 +486,9 @@ fun ModuleDetailScreen(
                         TextButton(onClick = {
                             viewModel.clearModuleSource(packageName)
                             editingSource = false
-                        }) { Text("Reset") }
+                        }) { Text(tr("Reset")) }
                     }
-                    TextButton(onClick = { editingSource = false }) { Text("Cancel") }
+                    TextButton(onClick = { editingSource = false }) { Text(tr("Cancel")) }
                 }
             },
         )
@@ -545,7 +547,7 @@ private fun DetailHeader(
                             text = "v${installedVersion.orEmpty()} \u2192 v${shortVersion(updateVersion.name)}",
                         )
                         isInstalled -> VersionPill(
-                            text = "Installed v${shortVersion(installedVersion)}",
+                            text = tr("Installed v${shortVersion(installedVersion)}"),
                         )
                         latestVersion != null -> VersionPill(
                             text = "v${shortVersion(latestVersion)}",
@@ -561,10 +563,10 @@ private fun DetailHeader(
 
         Spacer(Modifier.height(12.dp))
         val primaryLabel = when {
-            hasUpdate -> "Update"
-            isInstalled && installedHasLauncher -> "Open"
-            isInstalled -> "App info"
-            else -> "Install"
+            hasUpdate -> tr("Update")
+            isInstalled && installedHasLauncher -> tr("Open")
+            isInstalled -> tr("App info")
+            else -> tr("Install")
         }
         val primaryEnabled = when {
             hasUpdate -> primaryAsset != null
@@ -618,7 +620,7 @@ private fun DetailHeader(
                     modifier = Modifier.size(18.dp),
                 )
                 Spacer(Modifier.width(8.dp))
-                Text("Uninstall")
+                Text(tr("Uninstall"))
             }
         }
     }
@@ -689,8 +691,8 @@ private fun OverviewTab(
         if (fallback.isNullOrBlank()) {
             EmptyState(
                 icon = Icons.Outlined.Extension,
-                title = "No description",
-                body = "This module has not published a README.",
+                title = tr("No description"),
+                body = tr("This module has not published a README."),
             )
         } else {
             Text(
@@ -810,12 +812,12 @@ private fun ReleasesTab(
     val releases = module.allReleases()
     if (releases.isEmpty()) {
         if (loading) {
-            LoadingState("Loading releases...")
+            LoadingState(tr("Loading releases..."))
         } else {
             EmptyState(
                 icon = Icons.Outlined.Info,
-                title = "No releases",
-                body = "This module has not published any releases on GitHub.",
+                title = tr("No releases"),
+                body = tr("This module has not published any releases on GitHub."),
             )
         }
         return
@@ -853,24 +855,24 @@ private fun ReleaseCard(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = release.name ?: release.tagName ?: "Release",
+                        text = release.name ?: release.tagName ?: tr("Release"),
                         style = MaterialTheme.typography.titleSmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
                     )
                     Text(
-                        text = formatDate(release.publishedAt) ?: "Unknown date",
+                        text = formatDate(release.publishedAt) ?: tr("Unknown date"),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
                 if (release.isPrerelease) {
-                    StatusPill(text = "Pre-release")
+                    StatusPill(text = tr("Pre-release"))
                     Spacer(Modifier.width(4.dp))
                 }
                 if (release.url != null) {
                     IconButton(onClick = onOpenRelease) {
-                        Icon(Icons.AutoMirrored.Outlined.OpenInNew, contentDescription = "Open release page")
+                        Icon(Icons.AutoMirrored.Outlined.OpenInNew, contentDescription = tr("Open release page"))
                     }
                 }
             }
@@ -912,7 +914,7 @@ private fun ReleaseCard(
                         onClick = { expanded = !expanded },
                         contentPadding = PaddingValues(horizontal = 0.dp, vertical = 0.dp),
                     ) {
-                        Text(if (expanded) "Show less" else "Read more")
+                        Text(if (expanded) tr("Show less") else tr("Read more"))
                     }
                 }
                 HorizontalDivider(
@@ -928,7 +930,7 @@ private fun ReleaseCard(
             } else {
                 Spacer(Modifier.height(6.dp))
                 Text(
-                    text = "No APK attached to this release",
+                    text = tr("No APK attached to this release"),
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -961,7 +963,7 @@ private fun AssetRow(asset: RepoAsset, onInstall: () -> Unit) {
             )
             val details = buildList {
                 if (asset.size > 0) add(formatBytes(asset.size))
-                if (asset.downloadCount > 0) add("${asset.downloadCount} downloads")
+                if (asset.downloadCount > 0) add(tr("${asset.downloadCount} downloads"))
             }.joinToString(" - ")
             if (details.isNotEmpty()) {
                 Text(
@@ -975,13 +977,13 @@ private fun AssetRow(asset: RepoAsset, onInstall: () -> Unit) {
         FilledTonalButton(onClick = onInstall) {
             Icon(Icons.Outlined.Download, contentDescription = null, modifier = Modifier.size(16.dp))
             Spacer(Modifier.width(6.dp))
-            Text("Install")
+            Text(tr("Install"))
         }
     }
 }
 
 private fun copyToClipboard(context: Context, text: String) {
     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager ?: return
-    clipboard.setPrimaryClip(ClipData.newPlainText("package name", text))
-    Toast.makeText(context, "Package name copied", Toast.LENGTH_SHORT).show()
+    clipboard.setPrimaryClip(ClipData.newPlainText(tr("package name"), text))
+    Toast.makeText(context, tr("Package name copied"), Toast.LENGTH_SHORT).show()
 }

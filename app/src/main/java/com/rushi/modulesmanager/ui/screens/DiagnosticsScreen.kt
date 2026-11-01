@@ -1,5 +1,7 @@
 package com.rushi.modulesmanager.ui.screens
 
+import com.rushi.modulesmanager.ui.tr
+
 import android.content.Intent
 import android.os.Build
 import androidx.compose.foundation.layout.Arrangement
@@ -90,16 +92,16 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
     }
 
     val report = buildString {
-        appendLine("Modules Manager ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})")
-        appendLine("Build: ${BuildConfig.BUILD_TYPE} ${BuildConfig.GIT_COMMIT}")
-        appendLine("Android: ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})")
-        appendLine("Device: ${Build.MANUFACTURER} ${Build.MODEL}")
-        appendLine("ABIs: ${Build.SUPPORTED_ABIS.joinToString()}")
-        appendLine("Installed modules: ${installed.size}")
-        appendLine("Repository modules: ${modules.size}")
-        appendLine("Updates available: ${updates.size}")
-        appendLine("Index and README cache: ${formatStorage(stats.index + stats.readme)}")
-        appendLine("Downloaded APKs: ${formatStorage(stats.apks)}")
+        appendLine(tr("Modules Manager ${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"))
+        appendLine(tr("Build: ${BuildConfig.BUILD_TYPE} ${BuildConfig.GIT_COMMIT}"))
+        appendLine(tr("Android: ${Build.VERSION.RELEASE} (API ${Build.VERSION.SDK_INT})"))
+        appendLine(tr("Device: ${Build.MANUFACTURER} ${Build.MODEL}"))
+        appendLine(tr("ABIs: ${Build.SUPPORTED_ABIS.joinToString()}"))
+        appendLine(tr("Installed modules: ${installed.size}"))
+        appendLine(tr("Repository modules: ${modules.size}"))
+        appendLine(tr("Updates available: ${updates.size}"))
+        appendLine(tr("Index and README cache: ${formatStorage(stats.index + stats.readme)}"))
+        appendLine(tr("Downloaded APKs: ${formatStorage(stats.apks)}"))
     }.trimEnd()
 
     fun refreshStorage() {
@@ -115,12 +117,12 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
         topBar = {
             Column {
                 TopAppBar(
-                    title = { Text("Diagnostics") },
+                    title = { Text(tr("Diagnostics")) },
                     navigationIcon = {
                         IconButton(onClick = onBack) {
                             Icon(
                                 Icons.AutoMirrored.Outlined.ArrowBack,
-                                contentDescription = "Back",
+                                contentDescription = tr("Back"),
                             )
                         }
                     },
@@ -160,7 +162,7 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
                 OutlinedButton(
                     onClick = {
                         clipboard.setText(AnnotatedString(report))
-                        scope.launch { snackbar.showSnackbar("Report copied") }
+                        scope.launch { snackbar.showSnackbar(tr("Report copied")) }
                     },
                 ) {
                     Icon(
@@ -169,16 +171,16 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
                         modifier = Modifier.size(16.dp),
                     )
                     Spacer(Modifier.width(6.dp))
-                    Text("Copy")
+                    Text(tr("Copy"))
                 }
                 OutlinedButton(
                     onClick = {
                         val intent = Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"
                             putExtra(Intent.EXTRA_TEXT, report)
-                            putExtra(Intent.EXTRA_SUBJECT, "Modules Manager diagnostics")
+                            putExtra(Intent.EXTRA_SUBJECT, tr("Modules Manager diagnostics"))
                         }
-                        context.startActivity(Intent.createChooser(intent, "Share diagnostics"))
+                        context.startActivity(Intent.createChooser(intent, tr("Share diagnostics")))
                     },
                 ) {
                     Icon(
@@ -187,15 +189,15 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
                         modifier = Modifier.size(16.dp),
                     )
                     Spacer(Modifier.width(6.dp))
-                    Text("Share")
+                    Text(tr("Share"))
                 }
             }
 
             HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
-            Text("Storage", style = MaterialTheme.typography.titleSmall)
+            Text(tr("Storage"), style = MaterialTheme.typography.titleSmall)
 
             StorageRow(
-                title = "Index and README cache",
+                title = tr("Index and README cache"),
                 detail = formatStorage(stats.index + stats.readme),
                 onClear = {
                     viewModel.clearIndexCache()
@@ -203,7 +205,7 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
                 },
             )
             StorageRow(
-                title = "Downloaded APKs",
+                title = tr("Downloaded APKs"),
                 detail = formatStorage(stats.apks),
                 onClear = {
                     viewModel.clearDownloadedApks()
@@ -212,7 +214,7 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
             )
 
             Text(
-                text = "The index cache is fetched again after clearing. Downloaded APKs are only needed until the installer finishes.",
+                text = tr("The index cache is fetched again after clearing. Downloaded APKs are only needed until the installer finishes."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -238,6 +240,6 @@ private fun StorageRow(title: String, detail: String, onClear: () -> Unit) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
-        TextButton(onClick = onClear) { Text("Clear") }
+        TextButton(onClick = onClear) { Text(tr("Clear")) }
     }
 }

@@ -1,5 +1,7 @@
 package com.rushi.modulesmanager.ui.screens
 
+import com.rushi.modulesmanager.ui.tr
+
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
@@ -208,7 +210,7 @@ fun InstalledScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 6.dp),
-                placeholder = { Text("Search installed") },
+                placeholder = { Text(tr("Search installed")) },
                 leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = null) },
                 singleLine = true,
                 shape = RoundedCornerShape(24.dp),
@@ -224,25 +226,25 @@ fun InstalledScreen(
                 CountedFilterChip(
                     selected = filter == InstalledFilter.ALL,
                     onClick = { filter = InstalledFilter.ALL },
-                    label = "All",
+                    label = tr("All"),
                     count = searched.size,
                 )
                 CountedFilterChip(
                     selected = filter == InstalledFilter.UPDATES,
                     onClick = { filter = InstalledFilter.UPDATES },
-                    label = "Updates",
+                    label = tr("Updates"),
                     count = updatesInSearch,
                 )
                 CountedFilterChip(
                     selected = filter == InstalledFilter.SKIPPED,
                     onClick = { filter = InstalledFilter.SKIPPED },
-                    label = "Skipped",
+                    label = tr("Skipped"),
                     count = skippedInSearch,
                 )
                 CountedFilterChip(
                     selected = filter == InstalledFilter.UNTRACKED,
                     onClick = { filter = InstalledFilter.UNTRACKED },
-                    label = "Untracked",
+                    label = tr("Untracked"),
                     count = untrackedCount,
                 )
             }
@@ -267,7 +269,7 @@ fun InstalledScreen(
                         modifier = Modifier.size(18.dp),
                     )
                     Spacer(Modifier.width(8.dp))
-                    Text("Update all (${updates.size})")
+                    Text(tr("Update all (${updates.size})"))
                 }
             }
 
@@ -291,27 +293,27 @@ fun InstalledScreen(
                                 EmptyState(
                                     icon = Icons.Outlined.Apps,
                                     title = if (installed.isEmpty()) {
-                                        "No installed modules found"
+                                        tr("No installed modules found")
                                     } else {
                                         when (filter) {
-                                        InstalledFilter.UPDATES -> "Nothing to update"
-                                        InstalledFilter.SKIPPED -> "Nothing is skipped"
-                                        InstalledFilter.UNTRACKED -> "All modules are tracked"
-                                        InstalledFilter.ALL -> "No installed modules found"
+                                        InstalledFilter.UPDATES -> tr("Nothing to update")
+                                        InstalledFilter.SKIPPED -> tr("Nothing is skipped")
+                                        InstalledFilter.UNTRACKED -> tr("All modules are tracked")
+                                        InstalledFilter.ALL -> tr("No installed modules found")
                                         }
                                     },
                                     body = if (installed.isEmpty()) {
-                                        "Install modules from the Modules tab, then enable them in LSPosed."
+                                        tr("Install modules from the Modules tab, then enable them in LSPosed.")
                                     } else {
                                         when (filter) {
                                         InstalledFilter.UPDATES ->
-                                            "All installed modules are on their latest version."
+                                            tr("All installed modules are on their latest version.")
                                         InstalledFilter.SKIPPED ->
-                                            "No installed module has a skipped version or ignored updates."
+                                            tr("No installed module has a skipped version or ignored updates.")
                                         InstalledFilter.UNTRACKED ->
-                                            "Every installed module has an entry in the daily index."
+                                            tr("Every installed module has an entry in the daily index.")
                                         InstalledFilter.ALL ->
-                                                "Install modules from the Modules tab, then enable them in LSPosed."
+                                                tr("Install modules from the Modules tab, then enable them in LSPosed.")
                                         }
                                     },
                                 )
@@ -391,7 +393,7 @@ fun InstalledScreen(
                             containerColor = MaterialTheme.colorScheme.primaryContainer,
                             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                         ) {
-                            Icon(Icons.Outlined.KeyboardArrowUp, contentDescription = "Scroll to top")
+                            Icon(Icons.Outlined.KeyboardArrowUp, contentDescription = tr("Scroll to top"))
                         }
                     }
                     FloatingActionButton(
@@ -404,7 +406,7 @@ fun InstalledScreen(
                     ) {
                         Icon(
                             Icons.Outlined.Refresh,
-                            contentDescription = "Rescan installed modules",
+                            contentDescription = tr("Rescan installed modules"),
                         )
                     }
                 }
@@ -416,9 +418,9 @@ fun InstalledScreen(
     pendingUninstall?.let { module ->
         AlertDialog(
             onDismissRequest = { pendingUninstall = null },
-            title = { Text("Uninstall ${module.label}?") },
+            title = { Text(tr("Uninstall ${module.label}?")) },
             text = {
-                Text("This removes the app from the device. You can install it again from the Modules tab.")
+                Text(tr("This removes the app from the device. You can install it again from the Modules tab."))
             },
             confirmButton = {
                 TextButton(
@@ -426,10 +428,10 @@ fun InstalledScreen(
                         pendingUninstall = null
                         viewModel.uninstall(module.packageName)
                     },
-                ) { Text("Uninstall") }
+                ) { Text(tr("Uninstall")) }
             },
             dismissButton = {
-                TextButton(onClick = { pendingUninstall = null }) { Text("Cancel") }
+                TextButton(onClick = { pendingUninstall = null }) { Text(tr("Cancel")) }
             },
         )
     }
@@ -455,11 +457,11 @@ private fun LinkModuleDialog(
     var repoUrl by rememberSaveable { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Link manually") },
+        title = { Text(tr("Link manually")) },
         text = {
             Column {
                 Text(
-                    text = "Paste the GitHub repository for $label. Its releases will be used for updates.",
+                    text = tr("Paste the GitHub repository for $label. Its releases will be used for updates."),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -477,10 +479,10 @@ private fun LinkModuleDialog(
             TextButton(
                 onClick = { onLink(repoUrl) },
                 enabled = repoUrl.isNotBlank(),
-            ) { Text("Link") }
+            ) { Text(tr("Link")) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) { Text(tr("Cancel")) }
         },
     )
 }
@@ -552,7 +554,7 @@ private fun InstalledCard(
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.MoreVert,
-                                contentDescription = "More actions",
+                                contentDescription = tr("More actions"),
                                 modifier = Modifier.size(18.dp),
                             )
                         }
@@ -562,7 +564,7 @@ private fun InstalledCard(
                         ) {
                             if (update != null) {
                                 DropdownMenuItem(
-                                    text = { Text("Skip this version") },
+                                    text = { Text(tr("Skip this version")) },
                                     onClick = {
                                         menuOpen = false
                                         onSkipVersion()
@@ -571,7 +573,7 @@ private fun InstalledCard(
                             }
                             if (skippedVersion != null) {
                                 DropdownMenuItem(
-                                    text = { Text("Clear skipped version") },
+                                    text = { Text(tr("Clear skipped version")) },
                                     onClick = {
                                         menuOpen = false
                                         onClearSkipped()
@@ -581,7 +583,7 @@ private fun InstalledCard(
                             if (repoModule != null) {
                                 DropdownMenuItem(
                                     text = {
-                                        Text(if (ignored) "Restore updates" else "Ignore updates")
+                                        Text(if (ignored) tr("Restore updates") else tr("Ignore updates"))
                                     },
                                     onClick = {
                                         menuOpen = false
@@ -591,7 +593,7 @@ private fun InstalledCard(
                             }
                             if (linked) {
                                 DropdownMenuItem(
-                                    text = { Text("Unlink manual repository") },
+                                    text = { Text(tr("Unlink manual repository")) },
                                     onClick = {
                                         menuOpen = false
                                         onUnlinkModule()
@@ -599,7 +601,7 @@ private fun InstalledCard(
                                 )
                             } else if (repoModule == null) {
                                 DropdownMenuItem(
-                                    text = { Text("Link manually") },
+                                    text = { Text(tr("Link manually")) },
                                     onClick = {
                                         menuOpen = false
                                         onLinkModule()
@@ -608,7 +610,7 @@ private fun InstalledCard(
                             }
                             if (canTrackPreReleases) {
                                 DropdownMenuItem(
-                                    text = { Text("Follow pre-releases") },
+                                    text = { Text(tr("Follow pre-releases")) },
                                     leadingIcon = if (preReleases) {
                                         {
                                             Icon(
@@ -627,7 +629,7 @@ private fun InstalledCard(
                             }
                             repoModule?.developerLogin()?.let { developer ->
                                 DropdownMenuItem(
-                                    text = { Text("More by $developer") },
+                                    text = { Text(tr("More by $developer")) },
                                     onClick = {
                                         menuOpen = false
                                         onOpenDeveloper(developer)
@@ -636,7 +638,7 @@ private fun InstalledCard(
                             }
                             if (repoModule != null) {
                                 DropdownMenuItem(
-                                    text = { Text("View module") },
+                                    text = { Text(tr("View module")) },
                                     onClick = {
                                         menuOpen = false
                                         onOpenRepository()
@@ -644,14 +646,14 @@ private fun InstalledCard(
                                 )
                             }
                             DropdownMenuItem(
-                                text = { Text("App info") },
+                                text = { Text(tr("App info")) },
                                 onClick = {
                                     menuOpen = false
                                     onAppInfo()
                                 },
                             )
                             DropdownMenuItem(
-                                text = { Text("Uninstall") },
+                                text = { Text(tr("Uninstall")) },
                                 onClick = {
                                     menuOpen = false
                                     onUninstall()
@@ -681,9 +683,9 @@ private fun InstalledCard(
                             Spacer(Modifier.width(6.dp))
                             Text(
                                 text = if (module.scope.size == 1) {
-                                    "1 target"
+                                    tr("1 target")
                                 } else {
-                                    "${module.scope.size} targets"
+                                    tr("${module.scope.size} targets")
                                 },
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -695,16 +697,16 @@ private fun InstalledCard(
                     if (ignored || skippedVersion != null || update == null) {
                         Spacer(Modifier.width(8.dp))
                         when {
-                            ignored -> StatusPill(text = "Updates ignored")
+                            ignored -> StatusPill(text = tr("Updates ignored"))
                             skippedVersion != null -> StatusPill(
-                                text = "Skipped ${shortVersion(skippedVersion.substringAfter('-'))}",
+                                text = tr("Skipped ${shortVersion(skippedVersion.substringAfter('-'))}"),
                             )
                             repoModule != null -> StatusPill(
-                                text = "Up to date",
+                                text = tr("Up to date"),
                                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
                                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                             )
-                            else -> StatusPill(text = "Untracked")
+                            else -> StatusPill(text = tr("Untracked"))
                         }
                     }
                     val batchActive = batchItem != null &&
@@ -725,7 +727,7 @@ private fun InstalledCard(
                                 modifier = Modifier.size(14.dp),
                             )
                             Spacer(Modifier.width(4.dp))
-                            Text("Update", style = MaterialTheme.typography.labelMedium)
+                            Text(tr("Update"), style = MaterialTheme.typography.labelMedium)
                         }
                     }
                 }
@@ -741,7 +743,7 @@ private fun BatchItemProgress(item: BatchItemState, onCancel: () -> Unit) {
     if (item.phase == BatchPhase.FAILED) {
         Spacer(Modifier.height(4.dp))
         Text(
-            text = item.error ?: "Update failed",
+            text = item.error ?: tr("Update failed"),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.error,
             maxLines = 2,
@@ -755,11 +757,11 @@ private fun BatchItemProgress(item: BatchItemState, onCancel: () -> Unit) {
         else -> null
     }
     val label = when (item.phase) {
-        BatchPhase.QUEUED -> "Queued"
-        BatchPhase.DOWNLOADING -> "Downloading"
-        BatchPhase.WAITING_TO_INSTALL -> "Waiting to install"
-        BatchPhase.INSTALLING -> "Installing"
-        BatchPhase.CANCELLED -> "Cancelled"
+        BatchPhase.QUEUED -> tr("Queued")
+        BatchPhase.DOWNLOADING -> tr("Downloading")
+        BatchPhase.WAITING_TO_INSTALL -> tr("Waiting to install")
+        BatchPhase.INSTALLING -> tr("Installing")
+        BatchPhase.CANCELLED -> tr("Cancelled")
         else -> return
     }
     val cancelable = item.phase == BatchPhase.QUEUED ||
@@ -797,7 +799,7 @@ private fun BatchItemProgress(item: BatchItemState, onCancel: () -> Unit) {
             IconButton(onClick = onCancel, modifier = Modifier.size(30.dp)) {
                 Icon(
                     imageVector = Icons.Outlined.Close,
-                    contentDescription = "Cancel this update",
+                    contentDescription = tr("Cancel this update"),
                     modifier = Modifier.size(16.dp),
                 )
             }
@@ -827,9 +829,9 @@ private fun BatchProgressCard(
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = if (state.running) {
-                            state.current?.let { "Installing $it" } ?: "Preparing updates"
+                            state.current?.let { tr("Installing $it") } ?: tr("Preparing updates")
                         } else {
-                            "Updates interrupted"
+                            tr("Updates interrupted")
                         },
                         style = MaterialTheme.typography.labelLarge,
                         maxLines = 1,
@@ -837,8 +839,8 @@ private fun BatchProgressCard(
                     )
                     Text(
                         text = buildString {
-                            append("${state.finished} of ${state.total} done")
-                            if (failedItems.isNotEmpty()) append(" - ${failedItems.size} failed")
+                            append(tr("${state.finished} of ${state.total} done"))
+                            if (failedItems.isNotEmpty()) append(tr(" - ${failedItems.size} failed"))
                         },
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -854,9 +856,9 @@ private fun BatchProgressCard(
                     }
                 }
                 if (state.running) {
-                    TextButton(onClick = onCancel) { Text("Cancel") }
+                    TextButton(onClick = onCancel) { Text(tr("Cancel")) }
                 } else {
-                    TextButton(onClick = onDismiss) { Text("Dismiss") }
+                    TextButton(onClick = onDismiss) { Text(tr("Dismiss")) }
                 }
             }
             Spacer(Modifier.height(6.dp))

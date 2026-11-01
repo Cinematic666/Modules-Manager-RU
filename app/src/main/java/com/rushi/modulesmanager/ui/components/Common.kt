@@ -1,5 +1,7 @@
 package com.rushi.modulesmanager.ui.components
 
+import com.rushi.modulesmanager.ui.tr
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -296,12 +298,12 @@ fun ErrorBanner(message: String, onRetry: (() -> Unit)? = null) {
             Icon(Icons.Outlined.ErrorOutline, contentDescription = null, modifier = Modifier.size(20.dp))
             Spacer(Modifier.size(10.dp))
             Text(
-                text = message,
+                text = tr(message),
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.weight(1f),
             )
             if (onRetry != null) {
-                TextButton(onClick = onRetry) { Text("Retry") }
+                TextButton(onClick = onRetry) { Text(tr("Retry")) }
             }
         }
     }
@@ -420,15 +422,15 @@ fun DownloadBanner(
                     Text(
                         text = when {
                             state.paused -> {
-                                val total = if (state.total > 0) formatBytes(state.total) else "unknown size"
-                                "Paused - ${formatBytes(state.downloaded)} of $total"
+                                val total = if (state.total > 0) formatBytes(state.total) else tr("unknown size")
+                                tr("Paused - ${formatBytes(state.downloaded)} of $total")
                             }
                             state.phase == DownloadCenter.Phase.DOWNLOADING -> {
-                                val total = if (state.total > 0) formatBytes(state.total) else "unknown size"
-                                "${formatBytes(state.downloaded)} of $total"
+                                val total = if (state.total > 0) formatBytes(state.total) else tr("unknown size")
+                                tr("${formatBytes(state.downloaded)} of $total")
                             }
-                            state.phase == DownloadCenter.Phase.VERIFYING -> "Verifying package..."
-                            else -> "Opening the installer..."
+                            state.phase == DownloadCenter.Phase.VERIFYING -> tr("Verifying package...")
+                            else -> tr("Opening the installer...")
                         },
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -437,15 +439,15 @@ fun DownloadBanner(
                 if (state.phase == DownloadCenter.Phase.DOWNLOADING) {
                     if (state.paused) {
                         IconButton(onClick = onResume) {
-                            Icon(Icons.Outlined.PlayArrow, contentDescription = "Resume download")
+                            Icon(Icons.Outlined.PlayArrow, contentDescription = tr("Resume download"))
                         }
                     } else {
                         IconButton(onClick = onPause) {
-                            Icon(Icons.Outlined.Pause, contentDescription = "Pause download")
+                            Icon(Icons.Outlined.Pause, contentDescription = tr("Pause download"))
                         }
                     }
                     IconButton(onClick = onCancel) {
-                        Icon(Icons.Outlined.Close, contentDescription = "Cancel download")
+                        Icon(Icons.Outlined.Close, contentDescription = tr("Cancel download"))
                     }
                 }
             }
