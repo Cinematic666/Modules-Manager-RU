@@ -442,7 +442,7 @@ fun ModuleDetailScreen(
                                         )
                                         candidate.releaseTime?.let { time ->
                                             Text(
-                                                text = "Last release ${time.substringBefore('T')}",
+                                                text = tr("Last release ${time.substringBefore('T')}"),
                                                 style = MaterialTheme.typography.labelSmall,
                                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                             )
@@ -547,7 +547,7 @@ private fun DetailHeader(
                             text = "v${installedVersion.orEmpty()} \u2192 v${shortVersion(updateVersion.name)}",
                         )
                         isInstalled -> VersionPill(
-                            text = "Installed v${shortVersion(installedVersion)}",
+                            text = tr("Installed v${shortVersion(installedVersion)}"),
                         )
                         latestVersion != null -> VersionPill(
                             text = "v${shortVersion(latestVersion)}",
@@ -963,7 +963,7 @@ private fun AssetRow(asset: RepoAsset, onInstall: () -> Unit) {
             )
             val details = buildList {
                 if (asset.size > 0) add(formatBytes(asset.size))
-                if (asset.downloadCount > 0) add("${asset.downloadCount} downloads")
+                if (asset.downloadCount > 0) add(tr("${asset.downloadCount} downloads"))
             }.joinToString(" - ")
             if (details.isNotEmpty()) {
                 Text(
