@@ -178,7 +178,7 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
                         val intent = Intent(Intent.ACTION_SEND).apply {
                             type = "text/plain"
                             putExtra(Intent.EXTRA_TEXT, report)
-                            putExtra(Intent.EXTRA_SUBJECT, "Modules Manager diagnostics")
+                            putExtra(Intent.EXTRA_SUBJECT, tr("Modules Manager diagnostics"))
                         }
                         context.startActivity(Intent.createChooser(intent, tr("Share diagnostics")))
                     },
@@ -214,7 +214,7 @@ fun DiagnosticsScreen(viewModel: AppViewModel, onBack: () -> Unit) {
             )
 
             Text(
-                text = "The index cache is fetched again after clearing. Downloaded APKs are only needed until the installer finishes.",
+                text = tr("The index cache is fetched again after clearing. Downloaded APKs are only needed until the installer finishes."),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
