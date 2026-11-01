@@ -69,7 +69,7 @@ internal fun tr(source: String): String {
         source.startsWith("Updates available: ") -> "Доступные обновления: " + source.removePrefix("Updates available: ")
         source.startsWith("Index and README cache: ") -> "Кэш каталога и README: " + source.removePrefix("Index and README cache: ")
         source.startsWith("Downloaded APKs: ") -> "Загруженные APK: " + source.removePrefix("Downloaded APKs: ")
-        source.startsWith("Modules Manager ") -> "Менеджер модулей " + source.removePrefix("Modules Manager ")
+        source.startsWith("Modules Manager ") -> "Modules Manager " + source.removePrefix("Modules Manager ")
         source.startsWith("Update all (") -> "Обновить все (" + source.removePrefix("Update all (")
         source.endsWith(" sources") -> "Источников: " + source.removeSuffix(" sources")
         source.endsWith(" at a time") -> "Одновременно: " + source.removeSuffix(" at a time")
@@ -197,7 +197,7 @@ private val russianStrings = mapOf(
     "Concurrent downloads" to "Одновременные загрузки",
     "About" to "О приложении",
     "Buy me a coffee" to "Поддержать разработчика",
-    "Modules Manager" to "Менеджер модулей",
+    "Modules Manager" to "Modules Manager",
     "Device, build and cache details" to "Сведения об устройстве, сборке и кэше",
     "View on GitHub" to "Открыть на GitHub",
     "Close" to "Закрыть",
@@ -257,7 +257,7 @@ private val russianStrings = mapOf(
     "Updates available: \${updates.size}" to "Доступные обновления: \${updates.size}",
     "Index and README cache: \${formatStorage(stats.index + stats.readme)}" to "Кэш каталога и README: \${formatStorage(stats.index + stats.readme)}",
     "Downloaded APKs: \${formatStorage(stats.apks)}" to "Загруженные APK: \${formatStorage(stats.apks)}",
-    "Modules Manager \${BuildConfig.VERSION_NAME} (\${BuildConfig.VERSION_CODE})" to "Менеджер модулей \${BuildConfig.VERSION_NAME} (\${BuildConfig.VERSION_CODE})",
+    "Modules Manager \${BuildConfig.VERSION_NAME} (\${BuildConfig.VERSION_CODE})" to "Modules Manager \${BuildConfig.VERSION_NAME} (\${BuildConfig.VERSION_CODE})",
     "Choose an APK" to "Выберите APK",
     "Install cancelled" to "Установка отменена",
     "Install failed" to "Не удалось установить",
@@ -330,7 +330,7 @@ private val russianStrings = mapOf(
     "Could not open the uninstaller" to "Не удалось открыть деинсталлятор",
     "No app can open this link" to "Нет приложения для открытия этой ссылки",
     "Install cancelled" to "Установка отменена",
-    "The system blocked the install. Allow unknown apps for Modules Manager and try again" to "Система заблокировала установку. Разрешите установку неизвестных приложений для Менеджера модулей и повторите попытку",
+    "The system blocked the install. Allow unknown apps for Modules Manager and try again" to "Система заблокировала установку. Разрешите установку неизвестных приложений для Modules Manager и повторите попытку",
     "The installed app conflicts with this APK, usually because the signing keys differ" to "Установленное приложение конфликтует с этим APK. Обычно причина — разные ключи подписи",
     "This APK is not compatible with this device" to "Этот APK несовместим с устройством",
     "Not enough storage to install this APK" to "Недостаточно места для установки APK",
@@ -385,7 +385,7 @@ private val russianStrings = mapOf(
     "No link available" to "Ссылка недоступна",
     "No app can open this link" to "Нет приложения, способного открыть эту ссылку",
     "Install failed: \$it" to "Ошибка установки: \$it",
-    "Modules Manager diagnostics" to "Диагностика Менеджера модулей",
+    "Modules Manager diagnostics" to "Диагностика Modules Manager",
     "The index cache is fetched again after clearing. Downloaded APKs are only needed until the installer finishes." to "После очистки кэш каталога будет загружен заново. Скачанные APK нужны только до завершения установки.",
     "Start Shizuku, then choose Shizuku again" to "Запустите Shizuku, затем выберите его повторно",
     "Shizuku permission is already granted" to "Разрешение Shizuku уже выдано",
