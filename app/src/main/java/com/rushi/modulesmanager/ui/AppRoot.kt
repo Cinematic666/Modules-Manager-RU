@@ -239,7 +239,7 @@ fun AppRoot(viewModel: AppViewModel) {
                     verticalArrangement = Arrangement.spacedBy(2.dp),
                 ) {
                     Text(
-                        text = "${choice.module.displayName}\nSeveral APKs fit this device equally well.",
+                        text = tr("${choice.module.displayName}\nSeveral APKs fit this device equally well."),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -258,7 +258,7 @@ fun AppRoot(viewModel: AppViewModel) {
                                     addAll(ApkVariants.hints(asset))
                                     if (asset.size > 0) add(formatBytes(asset.size))
                                     if (asset.downloadCount > 0) {
-                                        add("${asset.downloadCount} downloads")
+                                        add(tr("${asset.downloadCount} downloads"))
                                     }
                                 }.joinToString(" - ")
                                 if (details.isNotEmpty()) {
