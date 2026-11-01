@@ -168,7 +168,7 @@ fun AppRoot(viewModel: AppViewModel) {
                                             navController.navigateTopLevel(destination.route)
                                         },
                                         icon = { DestinationIcon(destination, installed.size) },
-                                        label = { Text(destination.label) },
+                                        label = { Text(tr(destination.label)) },
                                     )
                                 }
                             }
@@ -379,7 +379,7 @@ private fun FloatingNavItem(
             exit = shrinkHorizontally() + fadeOut(),
         ) {
             Text(
-                text = destination.label,
+                text = tr(destination.label),
                 color = content,
                 style = MaterialTheme.typography.labelLarge,
                 maxLines = 1,
