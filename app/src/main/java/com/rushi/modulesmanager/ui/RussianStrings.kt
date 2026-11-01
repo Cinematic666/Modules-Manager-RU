@@ -43,6 +43,20 @@ internal fun tr(source: String): String {
         source.endsWith(", using the session installer") -> source.removeSuffix(", using the session installer") + ". Используется установщик сессий."
         source.endsWith(", opening the system uninstaller") -> source.removeSuffix(", opening the system uninstaller") + ". Открывается системное удаление."
         source.startsWith("Could not open ") -> "Не удалось открыть " + source.removePrefix("Could not open ")
+        source.startsWith("No repository URL is configured for ") ->
+            "Не настроен URL репозитория: " + source.removePrefix("No repository URL is configured for ")
+        source.startsWith("All ") && source.contains(" endpoints failed.") ->
+            "Не удалось обратиться к адресам репозитория (" + source.substringAfter("All ").substringBefore(" endpoints failed") + "). " +
+                tr(source.substringAfter("endpoints failed. "))
+        source.startsWith("Showing cached data. ") ->
+            "Показаны сохранённые данные. " + tr(source.removePrefix("Showing cached data. "))
+        source == "Cannot reach the repository. Check your connection." -> "Не удалось подключиться к репозиторию. Проверьте соединение."
+        source == "The repository took too long to respond." -> "Репозиторий слишком долго не отвечает."
+        source == "The repository's certificate could not be validated. Try another source." -> "Не удалось проверить сертификат репозитория. Попробуйте другой источник."
+        source == "That URL did not return a valid modules.json file." -> "По этой ссылке не получен корректный файл modules.json."
+        source == "The repository refused the request (HTTP 403). Try another source." -> "Репозиторий отклонил запрос (HTTP 403). Попробуйте другой источник."
+        source == "No modules.json was found at this repository URL." -> "По этой ссылке не найден файл modules.json."
+        source == "Could not load the repository." -> "Не удалось загрузить репозиторий."
         source.startsWith("Build: ") -> "Сборка: " + source.removePrefix("Build: ")
         source.startsWith("Android: ") -> "Android: " + source.removePrefix("Android: ")
         source.startsWith("Device: ") -> "Устройство: " + source.removePrefix("Device: ")
