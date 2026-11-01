@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.rushi.modulesmanager.ui.tr
 import com.rushi.modulesmanager.data.ApkInspector
 import com.rushi.modulesmanager.data.ApkInstaller
 import com.rushi.modulesmanager.data.ApkVariants
@@ -1949,7 +1950,7 @@ class AppViewModel(private val container: AppContainer) : ViewModel() {
     }
 
     private fun message(text: String) {
-        _messages.tryEmit(text)
+        _messages.tryEmit(tr(text))
     }
 
     private fun String.sanitizeFileName(): String =
