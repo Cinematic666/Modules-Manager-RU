@@ -699,7 +699,7 @@ private fun InstalledCard(
                         when {
                             ignored -> StatusPill(text = tr("Updates ignored"))
                             skippedVersion != null -> StatusPill(
-                                text = "Skipped ${shortVersion(skippedVersion.substringAfter('-'))}",
+                                text = tr("Skipped ${shortVersion(skippedVersion.substringAfter('-'))}"),
                             )
                             repoModule != null -> StatusPill(
                                 text = tr("Up to date"),
@@ -829,7 +829,7 @@ private fun BatchProgressCard(
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = if (state.running) {
-                            state.current?.let { "Installing $it" } ?: tr("Preparing updates")
+                            state.current?.let { tr("Installing $it") } ?: tr("Preparing updates")
                         } else {
                             tr("Updates interrupted")
                         },
