@@ -29,6 +29,14 @@ internal fun tr(source: String): String {
         source.startsWith("Linked to ") -> "Репозиторий подключён: " + source.removePrefix("Linked to ")
         source.startsWith("Source set to ") -> "Источник изменён: " + source.removePrefix("Source set to ")
         source.startsWith("No APK is available for ") -> "Для модуля нет доступного APK: " + source.removePrefix("No APK is available for ")
+        source.endsWith(" installed") -> "Установлено: " + source.removeSuffix(" installed")
+        source.startsWith("This release contains ") -> "Этот релиз содержит " + source.removePrefix("This release contains ")
+        source.startsWith("This APK needs Android API ") -> "Для этого APK требуется Android API " + source.removePrefix("This APK needs Android API ")
+        source.startsWith("This APK is built for ") -> "Этот APK собран для архитектур " + source.removePrefix("This APK is built for ")
+        source.startsWith("Allow ") && source.contains(" for Modules Manager") -> "Выдайте разрешение " + source.removePrefix("Allow ").replace(" for Modules Manager, then try again", " для Менеджера модулей и повторите попытку")
+        source.endsWith(", using the session installer") -> source.removeSuffix(", using the session installer") + ". Используется установщик сессий."
+        source.endsWith(", opening the system uninstaller") -> source.removeSuffix(", opening the system uninstaller") + ". Открывается системное удаление."
+        source.startsWith("Could not open ") -> "Не удалось открыть " + source.removePrefix("Could not open ")
         source.startsWith("No description") -> "Описание отсутствует"
         source == "Translation failed" -> "Не удалось выполнить перевод"
         else -> source
@@ -318,5 +326,25 @@ private val russianStrings = mapOf(
     "2 at a time" to "Одновременно: 2",
     "3 at a time" to "Одновременно: 3",
     "4 at a time" to "Одновременно: 4",
-    "5 at a time" to "Одновременно: 5"
+    "5 at a time" to "Одновременно: 5",
+    "Start Shizuku, then choose Shizuku again" to "Запустите Shizuku, затем выберите его повторно",
+    "Root access is not granted, using the session installer" to "Root-доступ не выдан. Используется системный установщик сессий",
+    "Root access is not granted, opening the system uninstaller" to "Root-доступ не выдан. Открывается системный деинсталлятор",
+    "Shizuku is not running" to "Shizuku не запущен",
+    "Shizuku permission was not granted" to "Разрешение Shizuku не выдано",
+    "This module is not available in the selected repository." to "Этот модуль недоступен в выбранном репозитории.",
+    "Opening the system installer" to "Открывается системный установщик",
+    "The app restarted before this finished" to "Приложение перезапустилось до завершения операции",
+    "No updates available" to "Нет доступных обновлений",
+    "No APK asset" to "В релизе отсутствует APK-файл",
+    "Update all cancelled" to "Обновление всех модулей отменено",
+    "Source reset to the index" to "Источник сброшен на запись из каталога",
+    "Could not translate this README" to "Не удалось перевести README",
+    "Could not translate these release notes" to "Не удалось перевести описание релиза",
+    "Could not open a system installer" to "Не удалось открыть системный установщик",
+    "Could not open app info" to "Не удалось открыть сведения о приложении",
+    "Could not open the uninstaller" to "Не удалось открыть деинсталлятор",
+    "No link available" to "Ссылка недоступна",
+    "No app can open this link" to "Нет приложения, способного открыть эту ссылку",
+    "Install failed: $it" to "Ошибка установки: $it"
 )
