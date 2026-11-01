@@ -298,7 +298,7 @@ fun ErrorBanner(message: String, onRetry: (() -> Unit)? = null) {
             Icon(Icons.Outlined.ErrorOutline, contentDescription = null, modifier = Modifier.size(20.dp))
             Spacer(Modifier.size(10.dp))
             Text(
-                text = message,
+                text = tr(message),
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier.weight(1f),
             )
