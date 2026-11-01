@@ -110,8 +110,8 @@ import kotlinx.coroutines.launch
 import java.time.Instant
 
 private enum class RepoFilter(val label: String) {
-    ALL("All"),
-    UPDATES("Updates"),
+    ALL(tr("All")),
+    UPDATES(tr("Updates")),
     INSTALLED(tr("Installed")),
     NOT_INSTALLED(tr("Not installed")),
 }
@@ -187,7 +187,7 @@ fun RepoListScreen(
         if (previous == null || stamp != previous) {
             Toast.makeText(
                 context,
-                "List updated ${formatRelativeTime(stamp)}",
+                tr("List updated ${formatRelativeTime(stamp)}"),
                 Toast.LENGTH_SHORT,
             ).show()
         }
@@ -270,13 +270,13 @@ fun RepoListScreen(
                 CountedFilterChip(
                     selected = filter == RepoFilter.ALL,
                     onClick = { filter = RepoFilter.ALL },
-                    label = "All",
+                    label = tr("All"),
                     count = searched.size,
                 )
                 CountedFilterChip(
                     selected = filter == RepoFilter.UPDATES,
                     onClick = { filter = RepoFilter.UPDATES },
-                    label = "Updates",
+                    label = tr("Updates"),
                     count = updatesInSearch,
                 )
                 CountedFilterChip(
@@ -765,7 +765,7 @@ internal fun ModuleCard(
                             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                         ) {
                             Text(
-                                text = "$sourceCount sources",
+                                text = tr("$sourceCount sources"),
                                 style = MaterialTheme.typography.labelSmall,
                                 modifier = Modifier.padding(horizontal = 7.dp, vertical = 2.dp),
                             )
@@ -805,7 +805,7 @@ internal fun ModuleCard(
                                         ClipboardManager::class.java,
                                     )
                                     clipboard?.setPrimaryClip(
-                                        ClipData.newPlainText("package name", module.packageName),
+                                        ClipData.newPlainText(tr("package name"), module.packageName),
                                     )
                                     Toast.makeText(
                                         context,
