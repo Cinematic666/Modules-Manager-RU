@@ -397,7 +397,7 @@ fun ModuleDetailScreen(
             text = {
                 Column {
                     Text(
-                        text = "Used for the owner, avatar, README and release links when the index points to a fork or the wrong repository.",
+                        text = tr("Used for the owner, avatar, README and release links when the index points to a fork or the wrong repository."),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -563,7 +563,7 @@ private fun DetailHeader(
 
         Spacer(Modifier.height(12.dp))
         val primaryLabel = when {
-            hasUpdate -> "Update"
+            hasUpdate -> tr("Update")
             isInstalled && installedHasLauncher -> tr("Open")
             isInstalled -> tr("App info")
             else -> tr("Install")
@@ -855,7 +855,7 @@ private fun ReleaseCard(
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = release.name ?: release.tagName ?: "Release",
+                        text = release.name ?: release.tagName ?: tr("Release"),
                         style = MaterialTheme.typography.titleSmall,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
@@ -984,6 +984,6 @@ private fun AssetRow(asset: RepoAsset, onInstall: () -> Unit) {
 
 private fun copyToClipboard(context: Context, text: String) {
     val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager ?: return
-    clipboard.setPrimaryClip(ClipData.newPlainText("package name", text))
+    clipboard.setPrimaryClip(ClipData.newPlainText(tr("package name"), text))
     Toast.makeText(context, tr("Package name copied"), Toast.LENGTH_SHORT).show()
 }
