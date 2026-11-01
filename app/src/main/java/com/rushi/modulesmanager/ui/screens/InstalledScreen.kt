@@ -226,25 +226,25 @@ fun InstalledScreen(
                 CountedFilterChip(
                     selected = filter == InstalledFilter.ALL,
                     onClick = { filter = InstalledFilter.ALL },
-                    label = "All",
+                    label = tr("All"),
                     count = searched.size,
                 )
                 CountedFilterChip(
                     selected = filter == InstalledFilter.UPDATES,
                     onClick = { filter = InstalledFilter.UPDATES },
-                    label = "Updates",
+                    label = tr("Updates"),
                     count = updatesInSearch,
                 )
                 CountedFilterChip(
                     selected = filter == InstalledFilter.SKIPPED,
                     onClick = { filter = InstalledFilter.SKIPPED },
-                    label = "Skipped",
+                    label = tr("Skipped"),
                     count = skippedInSearch,
                 )
                 CountedFilterChip(
                     selected = filter == InstalledFilter.UNTRACKED,
                     onClick = { filter = InstalledFilter.UNTRACKED },
-                    label = "Untracked",
+                    label = tr("Untracked"),
                     count = untrackedCount,
                 )
             }
@@ -406,7 +406,7 @@ fun InstalledScreen(
                     ) {
                         Icon(
                             Icons.Outlined.Refresh,
-                            contentDescription = "Rescan installed modules",
+                            contentDescription = tr("Rescan installed modules"),
                         )
                     }
                 }
@@ -683,9 +683,9 @@ private fun InstalledCard(
                             Spacer(Modifier.width(6.dp))
                             Text(
                                 text = if (module.scope.size == 1) {
-                                    "1 target"
+                                    tr("1 target")
                                 } else {
-                                    "${module.scope.size} targets"
+                                    tr("${module.scope.size} targets")
                                 },
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -697,16 +697,16 @@ private fun InstalledCard(
                     if (ignored || skippedVersion != null || update == null) {
                         Spacer(Modifier.width(8.dp))
                         when {
-                            ignored -> StatusPill(text = "Updates ignored")
+                            ignored -> StatusPill(text = tr("Updates ignored"))
                             skippedVersion != null -> StatusPill(
                                 text = "Skipped ${shortVersion(skippedVersion.substringAfter('-'))}",
                             )
                             repoModule != null -> StatusPill(
-                                text = "Up to date",
+                                text = tr("Up to date"),
                                 containerColor = MaterialTheme.colorScheme.secondaryContainer,
                                 contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
                             )
-                            else -> StatusPill(text = "Untracked")
+                            else -> StatusPill(text = tr("Untracked"))
                         }
                     }
                     val batchActive = batchItem != null &&
@@ -727,7 +727,7 @@ private fun InstalledCard(
                                 modifier = Modifier.size(14.dp),
                             )
                             Spacer(Modifier.width(4.dp))
-                            Text("Update", style = MaterialTheme.typography.labelMedium)
+                            Text(tr("Update"), style = MaterialTheme.typography.labelMedium)
                         }
                     }
                 }
@@ -743,7 +743,7 @@ private fun BatchItemProgress(item: BatchItemState, onCancel: () -> Unit) {
     if (item.phase == BatchPhase.FAILED) {
         Spacer(Modifier.height(4.dp))
         Text(
-            text = item.error ?: "Update failed",
+            text = item.error ?: tr("Update failed"),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.error,
             maxLines = 2,
@@ -757,11 +757,11 @@ private fun BatchItemProgress(item: BatchItemState, onCancel: () -> Unit) {
         else -> null
     }
     val label = when (item.phase) {
-        BatchPhase.QUEUED -> "Queued"
-        BatchPhase.DOWNLOADING -> "Downloading"
-        BatchPhase.WAITING_TO_INSTALL -> "Waiting to install"
-        BatchPhase.INSTALLING -> "Installing"
-        BatchPhase.CANCELLED -> "Cancelled"
+        BatchPhase.QUEUED -> tr("Queued")
+        BatchPhase.DOWNLOADING -> tr("Downloading")
+        BatchPhase.WAITING_TO_INSTALL -> tr("Waiting to install")
+        BatchPhase.INSTALLING -> tr("Installing")
+        BatchPhase.CANCELLED -> tr("Cancelled")
         else -> return
     }
     val cancelable = item.phase == BatchPhase.QUEUED ||
@@ -799,7 +799,7 @@ private fun BatchItemProgress(item: BatchItemState, onCancel: () -> Unit) {
             IconButton(onClick = onCancel, modifier = Modifier.size(30.dp)) {
                 Icon(
                     imageVector = Icons.Outlined.Close,
-                    contentDescription = "Cancel this update",
+                    contentDescription = tr("Cancel this update"),
                     modifier = Modifier.size(16.dp),
                 )
             }
@@ -829,9 +829,9 @@ private fun BatchProgressCard(
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = if (state.running) {
-                            state.current?.let { "Installing $it" } ?: "Preparing updates"
+                            state.current?.let { "Installing $it" } ?: tr("Preparing updates")
                         } else {
-                            "Updates interrupted"
+                            tr("Updates interrupted")
                         },
                         style = MaterialTheme.typography.labelLarge,
                         maxLines = 1,
@@ -839,8 +839,8 @@ private fun BatchProgressCard(
                     )
                     Text(
                         text = buildString {
-                            append("${state.finished} of ${state.total} done")
-                            if (failedItems.isNotEmpty()) append(" - ${failedItems.size} failed")
+                            append(tr("${state.finished} of ${state.total} done"))
+                            if (failedItems.isNotEmpty()) append(tr(" - ${failedItems.size} failed"))
                         },
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
