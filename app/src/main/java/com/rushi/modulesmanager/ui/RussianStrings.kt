@@ -43,6 +43,9 @@ internal fun tr(source: String): String {
         source.endsWith(", using the session installer") -> source.removeSuffix(", using the session installer") + ". Используется установщик сессий."
         source.endsWith(", opening the system uninstaller") -> source.removeSuffix(", opening the system uninstaller") + ". Открывается системное удаление."
         source.startsWith("Could not open ") -> "Не удалось открыть " + source.removePrefix("Could not open ")
+        source.startsWith("This README is already in ") -> "README уже на языке " + source.removePrefix("This README is already in ")
+        source.startsWith("Release notes are already in ") -> "Описание релиза уже на языке " + source.removePrefix("Release notes are already in ")
+        source.startsWith("This description is already in ") -> "Описание уже на языке " + source.removePrefix("This description is already in ")
         source.startsWith("No repository URL is configured for ") ->
             "Не настроен URL репозитория: " + source.removePrefix("No repository URL is configured for ")
         source.startsWith("All ") && source.contains(" endpoints failed.") ->
@@ -383,5 +386,45 @@ private val russianStrings = mapOf(
     "No app can open this link" to "Нет приложения, способного открыть эту ссылку",
     "Install failed: \$it" to "Ошибка установки: \$it",
     "Modules Manager diagnostics" to "Диагностика Менеджера модулей",
-    "The index cache is fetched again after clearing. Downloaded APKs are only needed until the installer finishes." to "После очистки кэш каталога будет загружен заново. Скачанные APK нужны только до завершения установки."
+    "The index cache is fetched again after clearing. Downloaded APKs are only needed until the installer finishes." to "После очистки кэш каталога будет загружен заново. Скачанные APK нужны только до завершения установки.",
+    "Start Shizuku, then choose Shizuku again" to "Запустите Shizuku, затем выберите его повторно",
+    "Shizuku permission is already granted" to "Разрешение Shizuku уже выдано",
+    "Shizuku permission granted" to "Разрешение Shizuku выдано",
+    "Shizuku permission was not granted" to "Разрешение Shizuku не выдано",
+    "Shizuku is not installed" to "Shizuku не установлен",
+    "Shizuku is not running" to "Shizuku не запущен",
+    "This module is not available in the selected repository." to "Этот модуль недоступен в выбранном репозитории.",
+    "This README has no Markdown text that can be translated" to "В README нет текста Markdown для перевода",
+    "These release notes have no text that can be translated" to "В описании релиза нет текста для перевода",
+    "There is no version to skip" to "Нет версии, которую можно пропустить",
+    "Skipped version cleared" to "Пропуск версии сброшен",
+    "Added to favourites" to "Добавлено в избранное",
+    "Removed from favourites" to "Удалено из избранного",
+    "Updates restored" to "Обновления возобновлены",
+    "Following stable releases" to "Используются только стабильные релизы",
+    "Manual link removed" to "Ручная привязка удалена",
+    "Source reset to the index" to "Источник сброшен на запись из каталога",
+    "Wait for the current install to finish" to "Дождитесь завершения текущей установки",
+    "The installer did not confirm the install" to "Установщик не подтвердил завершение установки",
+    "The downloaded file is not a valid APK" to "Загруженный файл не является корректным APK",
+    "This release is older than the installed version" to "Этот релиз старее установленной версии",
+    "The install timed out" to "Время ожидания установки истекло",
+    "The app restarted before this finished" to "Приложение перезапустилось до завершения операции",
+    "No updates available" to "Нет доступных обновлений",
+    "Repository is serving an older release" to "В репозитории опубликована более старая версия",
+    "No APK asset" to "В релизе отсутствует APK-файл",
+    "Update all cancelled" to "Обновление всех модулей отменено",
+    "The repository is still serving an older release" to "В репозитории всё ещё опубликована более старая версия",
+    "This module has no description to translate" to "У этого модуля нет описания для перевода",
+    "Could not open a system installer" to "Не удалось открыть системный установщик",
+    "Could not open app info" to "Не удалось открыть сведения о приложении",
+    "Could not open the uninstaller" to "Не удалось открыть деинсталлятор",
+    "No link available" to "Ссылка недоступна",
+    "No app can open this link" to "Нет приложения, способного открыть эту ссылку",
+    "Install cancelled" to "Установка отменена",
+    "The system blocked the install. Allow unknown apps for Modules Manager and try again" to "Система заблокировала установку. Разрешите установку неизвестных приложений для Менеджера модулей и повторите попытку",
+    "The installed app conflicts with this APK, usually because the signing keys differ" to "Установленное приложение конфликтует с этим APK. Обычно причина — разные ключи подписи",
+    "This APK is not compatible with this device" to "Этот APK несовместим с устройством",
+    "Not enough storage to install this APK" to "Недостаточно места для установки APK",
+    "Install failed" to "Не удалось установить приложение"
 )
