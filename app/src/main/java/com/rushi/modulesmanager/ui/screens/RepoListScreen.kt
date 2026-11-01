@@ -1,5 +1,7 @@
 package com.rushi.modulesmanager.ui.screens
 
+import com.rushi.modulesmanager.ui.tr
+
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.widget.Toast
@@ -110,8 +112,8 @@ import java.time.Instant
 private enum class RepoFilter(val label: String) {
     ALL("All"),
     UPDATES("Updates"),
-    INSTALLED("Installed"),
-    NOT_INSTALLED("Not installed"),
+    INSTALLED(tr("Installed")),
+    NOT_INSTALLED(tr("Not installed")),
 }
 
 @Composable
@@ -246,12 +248,12 @@ fun RepoListScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp),
-                placeholder = { Text("Search modules") },
+                placeholder = { Text(tr("Search modules")) },
                 leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = null) },
                 trailingIcon = {
                     if (query.isNotEmpty()) {
                         IconButton(onClick = { query = "" }) {
-                            Icon(Icons.Outlined.Close, contentDescription = "Clear search")
+                            Icon(Icons.Outlined.Close, contentDescription = tr("Clear search"))
                         }
                     }
                 },
@@ -280,13 +282,13 @@ fun RepoListScreen(
                 CountedFilterChip(
                     selected = filter == RepoFilter.INSTALLED,
                     onClick = { filter = RepoFilter.INSTALLED },
-                    label = "Installed",
+                    label = tr("Installed"),
                     count = installedInRepo,
                 )
                 CountedFilterChip(
                     selected = filter == RepoFilter.NOT_INSTALLED,
                     onClick = { filter = RepoFilter.NOT_INSTALLED },
-                    label = "Not installed",
+                    label = tr("Not installed"),
                     count = notInstalledInRepo,
                 )
             }
@@ -306,7 +308,7 @@ fun RepoListScreen(
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     when {
-                        loading && modules.isEmpty() -> LoadingState("Loading modules...")
+                        loading && modules.isEmpty() -> LoadingState(tr("Loading modules..."))
                         filtered.isEmpty() -> Box(
                             modifier = Modifier.fillMaxSize(),
                             contentAlignment = Alignment.Center,
@@ -314,19 +316,19 @@ fun RepoListScreen(
                             if (modules.isEmpty()) {
                                 EmptyState(
                                     icon = Icons.Outlined.ErrorOutline,
-                                    title = "Repository unavailable",
-                                    body = error ?: "No modules were found in the repository.",
-                                    actionLabel = "Retry",
+                                    title = tr("Repository unavailable"),
+                                    body = error ?: tr("No modules were found in the repository."),
+                                    actionLabel = tr("Retry"),
                                     onAction = viewModel::refresh,
                                 )
                             } else {
                                 EmptyState(
                                     icon = Icons.Outlined.Extension,
-                                    title = "Nothing here",
+                                    title = tr("Nothing here"),
                                     body = when (filter) {
-                                        RepoFilter.UPDATES -> "Every installed module is up to date."
-                                        RepoFilter.INSTALLED -> "None of your installed modules are in this repository."
-                                        RepoFilter.NOT_INSTALLED -> "Every module in this repository is installed."
+                                        RepoFilter.UPDATES -> tr("Every installed module is up to date.")
+                                        RepoFilter.INSTALLED -> tr("None of your installed modules are in this repository.")
+                                        RepoFilter.NOT_INSTALLED -> tr("Every module in this repository is installed.")
                                         RepoFilter.ALL -> "No module matches \"$query\"."
                                     },
                                 )
@@ -341,7 +343,7 @@ fun RepoListScreen(
                             if (showShelves) {
                                 item(key = "shelf-updated") {
                                     ModuleShelf(
-                                        title = "Recently updated",
+                                        title = tr("Recently updated"),
                                         modules = searched.sortedByDescending {
                                             parseInstant(it.latestTime(channel)) ?: Instant.EPOCH
                                         }.take(8),
@@ -353,7 +355,7 @@ fun RepoListScreen(
                                 }
                                 item(key = "shelf-starred") {
                                     ModuleShelf(
-                                        title = "Most starred",
+                                        title = tr("Most starred"),
                                         modules = searched.sortedByDescending { it.stargazerCount }
                                             .take(8),
                                         channel = channel,
@@ -433,7 +435,7 @@ fun RepoListScreen(
                             containerColor = MaterialTheme.colorScheme.primaryContainer,
                             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                         ) {
-                            Icon(Icons.Outlined.KeyboardArrowUp, contentDescription = "Scroll to top")
+                            Icon(Icons.Outlined.KeyboardArrowUp, contentDescription = tr("Scroll to top"))
                         }
                     }
                     FloatingActionButton(
@@ -444,7 +446,7 @@ fun RepoListScreen(
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
                         contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                     ) {
-                        Icon(Icons.Outlined.Refresh, contentDescription = "Refresh")
+                        Icon(Icons.Outlined.Refresh, contentDescription = tr("Refresh"))
                     }
                     Box {
                         FloatingActionButton(
@@ -452,11 +454,11 @@ fun RepoListScreen(
                             containerColor = MaterialTheme.colorScheme.primaryContainer,
                             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                         ) {
-                            Icon(Icons.AutoMirrored.Outlined.Sort, contentDescription = "Sort")
+                            Icon(Icons.AutoMirrored.Outlined.Sort, contentDescription = tr("Sort"))
                         }
                         DropdownMenu(expanded = showSortMenu, onDismissRequest = { showSortMenu = false }) {
                             DropdownMenuItem(
-                                text = { Text("Sort by name") },
+                                text = { Text(tr("Sort by name")) },
                                 leadingIcon = {
                                     if (sortMode == SortMode.NAME) Icon(Icons.Outlined.Check, null) else Spacer(Modifier.size(24.dp))
                                 },
@@ -466,7 +468,7 @@ fun RepoListScreen(
                                 },
                             )
                             DropdownMenuItem(
-                                text = { Text("Sort by last update") },
+                                text = { Text(tr("Sort by last update")) },
                                 leadingIcon = {
                                     if (sortMode == SortMode.UPDATED) Icon(Icons.Outlined.Check, null) else Spacer(Modifier.size(24.dp))
                                 },
@@ -476,7 +478,7 @@ fun RepoListScreen(
                                 },
                             )
                             DropdownMenuItem(
-                                text = { Text("Sort by recently added") },
+                                text = { Text(tr("Sort by recently added")) },
                                 leadingIcon = {
                                     if (sortMode == SortMode.ADDED) Icon(Icons.Outlined.Check, null) else Spacer(Modifier.size(24.dp))
                                 },
@@ -486,7 +488,7 @@ fun RepoListScreen(
                                 },
                             )
                             DropdownMenuItem(
-                                text = { Text("Sort by stars") },
+                                text = { Text(tr("Sort by stars")) },
                                 leadingIcon = {
                                     if (sortMode == SortMode.STARS) Icon(Icons.Outlined.Check, null) else Spacer(Modifier.size(24.dp))
                                 },
@@ -496,7 +498,7 @@ fun RepoListScreen(
                                 },
                             )
                             DropdownMenuItem(
-                                text = { Text("Sort by sources") },
+                                text = { Text(tr("Sort by sources")) },
                                 leadingIcon = {
                                     if (sortMode == SortMode.SOURCES) Icon(Icons.Outlined.Check, null) else Spacer(Modifier.size(24.dp))
                                 },
@@ -507,7 +509,7 @@ fun RepoListScreen(
                             )
                             HorizontalDivider()
                             DropdownMenuItem(
-                                text = { Text("Updates first") },
+                                text = { Text(tr("Updates first")) },
                                 leadingIcon = {
                                     Checkbox(
                                         checked = updatesFirst,
@@ -601,7 +603,7 @@ private fun ModuleShelf(
                                     val time = parseInstant(module.latestTime(channel))
                                     Text(
                                         text = time?.toEpochMilli()?.let(::formatRelativeTime)
-                                            ?: "No release",
+                                            ?: tr("No release"),
                                         style = MaterialTheme.typography.labelSmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                         maxLines = 1,
@@ -621,9 +623,9 @@ private fun ModuleShelf(
                                     Icons.Outlined.FavoriteBorder
                                 },
                                 contentDescription = if (favourite) {
-                                    "Remove from favourites"
+                                    tr("Remove from favourites")
                                 } else {
-                                    "Add to favourites"
+                                    tr("Add to favourites")
                                 },
                                 tint = if (favourite) {
                                     favouriteColor()
@@ -667,7 +669,7 @@ private fun DescriptionBlock(
     )
     if (canExpand || expanded) {
         Text(
-            text = if (expanded) "Show less" else "Read more",
+            text = if (expanded) tr("Show less") else tr("Read more"),
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier
@@ -698,7 +700,7 @@ private fun TranslateAction(
         } else {
             Icon(
                 imageVector = Icons.Outlined.Translate,
-                contentDescription = if (translated) "Show original" else "Translate",
+                contentDescription = if (translated) tr("Show original") else tr("Translate"),
                 tint = if (translated) {
                     MaterialTheme.colorScheme.primary
                 } else {
@@ -777,7 +779,7 @@ internal fun ModuleCard(
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.MoreVert,
-                                contentDescription = "More actions",
+                                contentDescription = tr("More actions"),
                                 modifier = Modifier.size(18.dp),
                             )
                         }
@@ -787,7 +789,7 @@ internal fun ModuleCard(
                         ) {
                             module.developerLogin()?.let { developer ->
                                 DropdownMenuItem(
-                                    text = { Text("More by $developer") },
+                                    text = { Text(tr("More by $developer")) },
                                     onClick = {
                                         menuOpen = false
                                         onOpenDeveloper(developer)
@@ -796,7 +798,7 @@ internal fun ModuleCard(
                                 HorizontalDivider()
                             }
                             DropdownMenuItem(
-                                text = { Text("Copy package name") },
+                                text = { Text(tr("Copy package name")) },
                                 onClick = {
                                     menuOpen = false
                                     val clipboard = context.getSystemService(
@@ -807,14 +809,14 @@ internal fun ModuleCard(
                                     )
                                     Toast.makeText(
                                         context,
-                                        "Package name copied",
+                                        tr("Package name copied"),
                                         Toast.LENGTH_SHORT,
                                     ).show()
                                 },
                             )
                             module.releasesPageUrl()?.let { url ->
                                 DropdownMenuItem(
-                                    text = { Text("Open releases page") },
+                                    text = { Text(tr("Open releases page")) },
                                     onClick = {
                                         menuOpen = false
                                         onOpenRelease(url)
@@ -834,9 +836,9 @@ internal fun ModuleCard(
                                 Icons.Outlined.FavoriteBorder
                             },
                             contentDescription = if (favourite) {
-                                "Remove from favourites"
+                                tr("Remove from favourites")
                             } else {
-                                "Add to favourites"
+                                tr("Add to favourites")
                             },
                             tint = if (favourite) {
                                 favouriteColor()
