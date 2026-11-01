@@ -9,7 +9,30 @@ import java.util.Locale
  */
 internal fun tr(source: String): String {
     if (Locale.getDefault().language != "ru") return source
-    return russianStrings[source] ?: source
+    russianStrings[source]?.let { return it }
+    return when {
+        source.startsWith("More by ") -> "Другие модули автора: " + source.removePrefix("More by ")
+        source.startsWith("Uninstall ") && source.endsWith("?") ->
+            "Удалить приложение " + source.removePrefix("Uninstall ").removeSuffix("?") + "?"
+        source.startsWith("List updated ") -> "Список обновлён " + source.removePrefix("List updated ")
+        source.startsWith("Installed ") -> "Установлено: " + source.removePrefix("Installed ")
+        source.startsWith("Skipped ") -> "Пропущена версия " + source.removePrefix("Skipped ")
+        source.startsWith("Updates ignored for ") -> "Обновления отключены для " + source.removePrefix("Updates ignored for ")
+        source.startsWith("Following pre-releases for ") -> "Включены предварительные версии для " + source.removePrefix("Following pre-releases for ")
+        source.startsWith("Updated ") && source.endsWith(" modules") ->
+            "Обновлено модулей: " + source.removePrefix("Updated ").removeSuffix(" modules")
+        source.startsWith("Updated ") && source.contains("; failed:") ->
+            "Обновлено " + source.removePrefix("Updated ").replace("; failed:", "; ошибок:")
+        source.startsWith("Uninstalled ") -> "Удалено: " + source.removePrefix("Uninstalled ")
+        source.startsWith("Install failed: ") -> "Ошибка установки: " + source.removePrefix("Install failed: ")
+        source.startsWith("Could not load releases from ") -> "Не удалось загрузить релизы из " + source.removePrefix("Could not load releases from ")
+        source.startsWith("Linked to ") -> "Репозиторий подключён: " + source.removePrefix("Linked to ")
+        source.startsWith("Source set to ") -> "Источник изменён: " + source.removePrefix("Source set to ")
+        source.startsWith("No APK is available for ") -> "Для модуля нет доступного APK: " + source.removePrefix("No APK is available for ")
+        source.startsWith("No description") -> "Описание отсутствует"
+        source == "Translation failed" -> "Не удалось выполнить перевод"
+        else -> source
+    }
 }
 
 private val russianStrings = mapOf(
@@ -213,5 +236,57 @@ private val russianStrings = mapOf(
     "Paused - ${formatBytes(state.downloaded)} of $total" to "Приостановлено — ${formatBytes(state.downloaded)} из $total",
     "${formatBytes(state.downloaded)} of $total" to "${formatBytes(state.downloaded)} из $total",
     "unknown size" to "неизвестный размер",
-    "Diagnostics" to "Диагностика"
+    "Diagnostics" to "Диагностика",
+    "Rescanned installed modules" to "Список установленных модулей обновлён",
+    "Index cache cleared" to "Кэш каталога очищен",
+    "Downloaded APKs cleared" to "Загруженные APK удалены",
+    "Shizuku permission is already granted" to "Разрешение Shizuku уже выдано",
+    "Start Shizuku, then choose Shizuku again" to "Запустите Shizuku, затем снова выберите Shizuku",
+    "Shizuku permission granted" to "Разрешение Shizuku выдано",
+    "Shizuku permission was not granted" to "Разрешение Shizuku не выдано",
+    "Shizuku is not installed" to "Shizuku не установлен",
+    "This module is not available in the selected repository." to "Этот модуль недоступен в выбранном репозитории.",
+    "This README has no Markdown text that can be translated" to "В README нет текста Markdown для перевода",
+    "This README is already in ${displayLanguage(target)}" to "README уже на языке ${displayLanguage(target)}",
+    "Could not translate this README" to "Не удалось перевести README",
+    "These release notes have no text that can be translated" to "В описании релиза нет текста для перевода",
+    "Release notes are already in ${displayLanguage(target)}" to "Описание релиза уже на языке ${displayLanguage(target)}",
+    "Could not translate these release notes" to "Не удалось перевести описание релиза",
+    "There is no version to skip" to "Нет версии, которую можно пропустить",
+    "Skipped version cleared" to "Пропуск версии сброшен",
+    "Added to favourites" to "Добавлено в избранное",
+    "Removed from favourites" to "Удалено из избранного",
+    "Updates restored" to "Обновления возобновлены",
+    "Following stable releases" to "Используются только стабильные релизы",
+    "Paste a GitHub URL like https://github.com/owner/repo" to "Вставьте ссылку на GitHub, например https://github.com/owner/repo",
+    "Could not open releases from $repo" to "Не удалось открыть релизы из $repo",
+    "Manual link removed" to "Ручная привязка удалена",
+    "Source reset to the index" to "Источник сброшен на значение из каталога",
+    "Wait for the current install to finish" to "Дождитесь завершения текущей установки",
+    "Opening the system installer" to "Открывается системный установщик",
+    "The installer did not confirm the install" to "Установщик не подтвердил завершение установки",
+    "The downloaded file is not a valid APK" to "Загруженный файл не является корректным APK",
+    "This release is older than the installed version" to "Этот релиз старее установленной версии",
+    "Could not open a system installer" to "Не удалось открыть системный установщик",
+    "Root access is not granted, using the session installer" to "Нет root-доступа. Используется системный установщик сессий",
+    "Allow unknown apps for Modules Manager, then try again" to "Разрешите установку неизвестных приложений для Менеджера модулей и повторите попытку",
+    "The install timed out" to "Время ожидания установки истекло",
+    "The app restarted before this finished" to "Приложение перезапустилось до завершения операции",
+    "No updates available" to "Нет доступных обновлений",
+    "Repository is serving an older release" to "В репозитории опубликована более старая версия",
+    "No APK asset" to "В релизе нет APK-файла",
+    "Update all cancelled" to "Обновление всех модулей отменено",
+    "The repository is still serving an older release" to "В репозитории всё ещё опубликована более старая версия",
+    "This module has no description to translate" to "У этого модуля нет описания для перевода",
+    "This description is already in ${displayLanguage(target)}" to "Описание уже на языке ${displayLanguage(target)}",
+    "This module has no settings screen" to "У этого модуля нет экрана настроек",
+    "Could not open app info" to "Не удалось открыть сведения о приложении",
+    "Could not open the uninstaller" to "Не удалось открыть деинсталлятор",
+    "No app can open this link" to "Нет приложения для открытия этой ссылки",
+    "Install cancelled" to "Установка отменена",
+    "The system blocked the install. Allow unknown apps for Modules Manager and try again" to "Система заблокировала установку. Разрешите установку неизвестных приложений для Менеджера модулей и повторите попытку",
+    "The installed app conflicts with this APK, usually because the signing keys differ" to "Установленное приложение конфликтует с этим APK. Обычно причина — разные ключи подписи",
+    "This APK is not compatible with this device" to "Этот APK несовместим с устройством",
+    "Not enough storage to install this APK" to "Недостаточно места для установки APK",
+    "Install failed" to "Не удалось установить приложение"
 )
