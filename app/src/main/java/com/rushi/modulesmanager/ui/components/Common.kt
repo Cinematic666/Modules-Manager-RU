@@ -422,15 +422,15 @@ fun DownloadBanner(
                     Text(
                         text = when {
                             state.paused -> {
-                                val total = if (state.total > 0) formatBytes(state.total) else "unknown size"
-                                "Paused - ${formatBytes(state.downloaded)} of $total"
+                                val total = if (state.total > 0) formatBytes(state.total) else tr("unknown size")
+                                tr("Paused - ${formatBytes(state.downloaded)} of $total")
                             }
                             state.phase == DownloadCenter.Phase.DOWNLOADING -> {
-                                val total = if (state.total > 0) formatBytes(state.total) else "unknown size"
-                                "${formatBytes(state.downloaded)} of $total"
+                                val total = if (state.total > 0) formatBytes(state.total) else tr("unknown size")
+                                tr("${formatBytes(state.downloaded)} of $total")
                             }
-                            state.phase == DownloadCenter.Phase.VERIFYING -> "Verifying package..."
-                            else -> "Opening the installer..."
+                            state.phase == DownloadCenter.Phase.VERIFYING -> tr("Verifying package...")
+                            else -> tr("Opening the installer...")
                         },
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
