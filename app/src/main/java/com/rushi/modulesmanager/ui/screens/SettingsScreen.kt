@@ -146,7 +146,7 @@ fun SettingsScreen(
                 icon = Icons.Outlined.Language,
                 title = tr("Language"),
                 subtitle = if (translateLanguage == null) {
-                    "${TranslationLanguages.selectedLabel(null)} (device language)"
+                    tr("${TranslationLanguages.selectedLabel(null)} (device language)")
                 } else {
                     TranslationLanguages.selectedLabel(translateLanguage)
                 },
@@ -382,7 +382,7 @@ fun SettingsScreen(
                                 },
                             )
                             Column(modifier = Modifier.weight(1f)) {
-                                Text("$count at a time", style = MaterialTheme.typography.bodyLarge)
+                                Text(tr("$count at a time"), style = MaterialTheme.typography.bodyLarge)
                                 if (count == 3) {
                                     Text(
                                         text = tr("Default"),
@@ -445,10 +445,10 @@ fun SettingsScreen(
                         ) {
                             Text(
                                 text = when (shizukuStatus) {
-                                    ShizukuInstaller.Status.READY -> "Shizuku is running and allowed"
+                                    ShizukuInstaller.Status.READY -> tr("Shizuku is running and allowed")
                                     ShizukuInstaller.Status.PERMISSION_REQUIRED ->
-                                        "Shizuku permission is not granted"
-                                    ShizukuInstaller.Status.NOT_RUNNING -> "Shizuku is not running"
+                                        tr("Shizuku permission is not granted")
+                                    ShizukuInstaller.Status.NOT_RUNNING -> tr("Shizuku is not running")
                                 },
                                 style = MaterialTheme.typography.bodySmall,
                                 color = if (shizukuStatus == ShizukuInstaller.Status.READY) {
