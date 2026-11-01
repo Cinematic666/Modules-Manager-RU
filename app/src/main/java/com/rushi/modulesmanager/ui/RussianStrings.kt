@@ -37,6 +37,21 @@ internal fun tr(source: String): String {
         source.endsWith(", using the session installer") -> source.removeSuffix(", using the session installer") + ". Используется установщик сессий."
         source.endsWith(", opening the system uninstaller") -> source.removeSuffix(", opening the system uninstaller") + ". Открывается системное удаление."
         source.startsWith("Could not open ") -> "Не удалось открыть " + source.removePrefix("Could not open ")
+        source.startsWith("Build: ") -> "Сборка: " + source.removePrefix("Build: ")
+        source.startsWith("Android: ") -> "Android: " + source.removePrefix("Android: ")
+        source.startsWith("Device: ") -> "Устройство: " + source.removePrefix("Device: ")
+        source.startsWith("ABIs: ") -> "Архитектуры: " + source.removePrefix("ABIs: ")
+        source.startsWith("Installed modules: ") -> "Установленные модули: " + source.removePrefix("Installed modules: ")
+        source.startsWith("Repository modules: ") -> "Модули в каталоге: " + source.removePrefix("Repository modules: ")
+        source.startsWith("Updates available: ") -> "Доступные обновления: " + source.removePrefix("Updates available: ")
+        source.startsWith("Index and README cache: ") -> "Кэш каталога и README: " + source.removePrefix("Index and README cache: ")
+        source.startsWith("Downloaded APKs: ") -> "Загруженные APK: " + source.removePrefix("Downloaded APKs: ")
+        source.startsWith("Modules Manager ") -> "Менеджер модулей " + source.removePrefix("Modules Manager ")
+        source.startsWith("Update all (") -> "Обновить все (" + source.removePrefix("Update all (")
+        source.endsWith(" sources") -> "Источников: " + source.removeSuffix(" sources")
+        source.endsWith(" at a time") -> "Одновременно: " + source.removeSuffix(" at a time")
+        source.endsWith(" of " + source.substringAfter(" of ", "")) && source.contains(" of ") ->
+            source.replace(" of ", " из ")
         source.startsWith("No description") -> "Описание отсутствует"
         source == "Translation failed" -> "Не удалось выполнить перевод"
         else -> source
